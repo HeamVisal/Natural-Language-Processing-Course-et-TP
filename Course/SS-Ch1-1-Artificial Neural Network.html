@@ -1,0 +1,795 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A beginner self-study guide to Section 1 and 1.1 of Language Modeling: A Mathematical Perspective. Offline mathematics, neural network labs, PyTorch walkthroughs, and practice.">
+<meta name="color-scheme" content="light">
+<title>Artificial Neural Network · Chapter 1 Self-Study</title>
+<noscript><style>@media(max-width:800px){.sidebar{position:static;transform:none;width:auto}.shell{margin:0}.sidebar-bottom,#menu-toggle{display:none}}</style></noscript>
+<style>
+:root{--paper:#f5f6f2;--white:#fff;--ink:#1c2d35;--muted:#586970;--line:#dce3df;--accent:#176b5b;--mint:#e9f4ed;--nav:#142b31;--nav-soft:#b5c9c7;--orange:#9d4f24;--peach:#fff2e9;--blue:#355c99;--blue-soft:#eff4fc;--yellow:#fff7da;--radius:16px;--shadow:0 8px 26px #153d2b06}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:82px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.8 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent);text-underline-offset:4px}button,input,select{font:inherit}button,select{min-height:44px}button{cursor:pointer}button:disabled{cursor:default;opacity:.55}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,.equation:focus-visible,pre:focus-visible{outline:3px solid #ca7c2b;outline-offset:4px}input[type=range]{accent-color:var(--accent);width:100%;min-height:44px;margin:0}button{border:1px solid var(--line);border-radius:9px;background:var(--white);color:var(--ink);padding:9px 15px;font-size:.86rem;font-weight:650}button:hover{border-color:var(--accent);background:#f2f8f3}.primary{background:var(--accent);color:white;border-color:var(--accent)}.primary:hover{background:#105748;color:white}button.plain{background:transparent}.skip{position:fixed;top:-80px;left:20px;z-index:100;background:white;padding:12px}.skip:focus{top:12px}.sidebar{position:fixed;inset:0 auto 0 0;width:252px;background:var(--nav);color:white;z-index:40;display:flex;flex-direction:column;padding:34px 24px 24px;overflow-y:auto}.brand{display:flex;gap:11px;align-items:center;color:white;text-decoration:none;line-height:1.4;font-size:.95rem;font-weight:700}.brand-mark{display:grid;place-items:center;width:38px;height:38px;border:1px solid #6a9288;border-radius:11px;color:#cfeeb9;font:700 .8rem ui-monospace,monospace}.brand small{display:block;color:var(--nav-soft);font-size:.64rem;letter-spacing:.12em;font-weight:500}.sidebar-heading{font-size:.67rem;letter-spacing:.16em;color:#9fbab5;text-transform:uppercase;margin:44px 10px 15px}.toc{display:grid;gap:4px}.toc a{display:flex;align-items:center;gap:11px;padding:11px 10px;color:#c3d3d1;text-decoration:none;border-radius:8px;font-size:.79rem;line-height:1.5;border:1px solid transparent}.toc a span{width:19px;color:#819e99;font:500 .67rem ui-monospace,monospace}.toc a:hover{background:#213f43;color:white}.toc a.active{background:#28483f;color:#f0ffd9;border-color:#426554}.toc a.active span{color:#cceba3}.sidebar-bottom{margin-top:auto;padding:34px 10px 0;color:#9eb8b2;font-size:.72rem;line-height:1.7}.sidebar-bottom strong{color:#e1ece5;font-weight:500}.study-progress{height:3px;background:#3c5555;border-radius:8px;overflow:hidden;margin:12px 0}.study-progress span{height:100%;background:#c4e8a5;display:block;width:0;transition:width .15s}.shell{margin-left:252px;min-width:0}.topbar{position:sticky;top:0;z-index:25;border-bottom:1px solid var(--line);background:#f5f6f2f5;backdrop-filter:blur(10px);display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:67px;padding:10px 40px}.crumbs{font-size:.68rem;letter-spacing:.13em;color:var(--muted);display:flex;flex-wrap:wrap;gap:9px}.crumbs b{font-weight:600;color:var(--ink)}.top-actions{display:flex;gap:10px;align-items:center}.offline{font-size:.66rem;color:var(--accent);white-space:nowrap}.offline:before{content:"";display:inline-block;background:#409c62;width:6px;height:6px;border-radius:50%;margin-right:6px}.topbar button{min-height:36px;padding:5px 12px;font-size:.72rem}#menu-toggle{display:none}.reader{max-width:1020px;margin:auto;padding:45px 52px 80px}.hero{padding:16px 0 35px;border-bottom:1px solid var(--line);margin-bottom:36px}.eyebrow{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;font-weight:700;color:var(--accent);margin:0 0 16px}.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:24px;align-items:center}.hero h1{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:clamp(2.8rem,4.5vw,4.35rem);line-height:1.07;letter-spacing:-.045em;margin:6px 0 24px}.hero h1 em{font-style:normal;color:var(--accent)}.hero p{font-size:.99rem;color:var(--muted);line-height:1.8;max-width:550px}.hero-art{position:relative;min-width:0}.hero-art svg{width:100%;height:auto}.hero-art figcaption{text-align:center;font:500 .65rem ui-monospace,monospace;color:var(--muted)}.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0}.tag{font-size:.68rem;line-height:1.5;padding:6px 10px;border:1px solid var(--line);border-radius:5px;background:white;color:var(--muted)}.tag.green{background:var(--mint);border-color:#c7dfd0;color:var(--accent)}.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:25px 0}.intro-box{border:1px solid var(--line);border-radius:var(--radius);padding:21px 23px;background:white}.intro-box h2{font-size:.92rem;margin:0 0 10px;font-family:inherit}.intro-box ul{font-size:.85rem;line-height:1.8;padding-left:18px;margin:0}.scope{font-size:.78rem;line-height:1.8;color:var(--muted);margin:20px 0}section.lesson{margin:65px 0 0;scroll-margin-top:10px}.section-heading{display:flex;gap:17px;align-items:flex-start;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:24px}.section-number{display:grid;place-items:center;flex:0 0 42px;height:42px;background:#e5ede6;border:1px solid #d0ded0;border-radius:11px;color:var(--accent);font:600 .8rem ui-monospace,monospace;margin-top:4px}.section-kicker{margin:0;color:var(--accent);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;font-weight:650}.section-heading h2{font-family:Georgia,"Times New Roman",serif;letter-spacing:-.025em;line-height:1.22;font-weight:500;font-size:2.05rem;margin:3px 0 8px}.source-ref{font-size:.7rem;color:var(--muted);margin:0}.source-ref a{color:var(--muted)}h3{font-size:1.14rem;line-height:1.4;margin:35px 0 12px;font-weight:700;letter-spacing:-.02em}h4{font-size:.96rem;margin:21px 0 8px}p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:3px;margin:5px 0}.muted{color:var(--muted)}.small{font-size:.8rem}.lead{font-size:1.06rem;line-height:1.9}.callout{border-radius:0 11px 11px 0;border-left:3px solid var(--accent);background:var(--mint);padding:16px 21px;margin:24px 0;font-size:.89rem;line-height:1.8}.callout strong:first-child{display:block;font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px;color:var(--accent)}.callout p{margin:5px 0}.callout.tip{background:var(--blue-soft);border-color:var(--blue)}.callout.tip strong:first-child{color:var(--blue)}.callout.warning{background:var(--peach);border-color:var(--orange)}.callout.warning strong:first-child{color:var(--orange)}.callout.review{background:var(--yellow);border-color:#b18a1e}.callout.review strong:first-child{color:#7a6518}.equation{overflow-x:auto;overflow-y:hidden;max-width:100%;background:white;border:1px solid var(--line);border-radius:10px;padding:20px 16px;margin:20px 0;color:#193d38}.equation math{font-size:1.18rem;min-width:max-content;margin:0 auto;line-height:1.6}math mtext{font-family:system-ui,sans-serif;font-size:85%}.equation:focus{outline-offset:2px}.math{font-family:Georgia,"Times New Roman",serif;white-space:nowrap;font-size:1.04em}.math sub,.math sup{font-size:.72em;line-height:0}.steps{list-style:none;counter-reset:steps;padding:0;margin:23px 0}.steps>li{counter-increment:steps;position:relative;padding:2px 0 17px 39px;margin:0;border-left:1px solid #d2dfd7;margin-left:12px}.steps>li:last-child{border:0}.steps>li:before{content:counter(steps);position:absolute;left:-13px;top:2px;width:25px;height:25px;background:#e4efe4;border:3px solid var(--paper);color:var(--accent);border-radius:50%;display:grid;place-items:center;font:700 .65rem ui-monospace,monospace}.steps p{margin:6px 0;font-size:.89rem}.calc{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.86rem;line-height:1.9;overflow-wrap:anywhere;background:#edf1ec;border-radius:7px;padding:11px 14px;margin:8px 0}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px}.two-col>*{min-width:0}.table-wrap{overflow-x:auto;max-width:100%;margin:20px 0;border:1px solid var(--line);border-radius:10px;background:white}table{border-collapse:collapse;width:100%;font-size:.84rem;line-height:1.7}th,td{padding:12px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#edf2ed;font-weight:650;font-size:.76rem}tr:last-child td,tr:last-child th{border-bottom:0}td code,li code,p code,dd code{font-size:.83em;padding:2px 5px;border-radius:4px;background:#e9eeea;color:#31534d;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere}figure{margin:25px 0}figure svg{display:block;max-width:100%;height:auto}figcaption{font-size:.76rem;color:var(--muted);line-height:1.75;margin:13px 0 0}.figure-panel{background:white;border:1px solid var(--line);border-radius:var(--radius);padding:24px}.figure-panel svg{width:100%}.figure-panel text,.chart text{font-family:system-ui,sans-serif}.flow{display:flex;gap:9px;align-items:center;justify-content:space-between;margin:23px 0;font-size:.81rem}.flow .node{flex:1;text-align:center;border:1px solid var(--line);background:white;border-radius:9px;padding:13px 7px;line-height:1.6;min-width:0}.flow .node small{display:block;color:var(--muted);font-size:.67rem;margin-top:3px}.flow .arrow{color:var(--accent);font-size:1.1rem}.lab{margin:28px 0;border:1px solid #c6d8ce;background:white;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}.lab-header{padding:19px 23px 17px;background:#edf4ee;border-bottom:1px solid #d4e2d8;display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.lab-header h3{margin:3px 0 0;font-size:1.07rem}.lab-label{font:700 .61rem ui-monospace,monospace;letter-spacing:.1em;color:var(--accent)}.lab-number{font:500 .7rem ui-monospace,monospace;color:#6a8877;padding-top:3px}.lab-body{padding:23px}.lab-intro{font-size:.84rem;color:var(--muted);margin:0 0 20px}.controls{display:grid;gap:15px 23px;grid-template-columns:repeat(2,minmax(0,1fr))}.control{display:block;min-width:0}.control-name{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-size:.76rem;font-weight:600;margin-bottom:5px}.control-name output{color:var(--accent);font:600 .8rem ui-monospace,monospace}.control select{display:block;width:100%;background:#fff;border:1px solid #b7c9bf;border-radius:7px;padding:7px 9px;font-size:.81rem;color:var(--ink)}.range-limits{display:flex;justify-content:space-between;color:#748179;font:400 .61rem ui-monospace,monospace;margin-top:-3px}.button-row{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}.readout{margin-top:20px;padding:17px 18px;background:#f2f6f0;border-radius:9px;border:1px solid #e1e9df;font-size:.83rem;line-height:1.9}.readout strong{color:var(--accent)}.big-answer{font:500 2rem ui-monospace,monospace;color:var(--accent);line-height:1.3;display:block;margin-top:5px}.lab-foot{background:#f8faf6;border-top:1px solid #e4ebe2;padding:12px 23px;font-size:.7rem;color:var(--muted);line-height:1.8}.chart{width:100%;height:auto;display:block;margin:13px 0 6px;overflow:visible}.legend{display:flex;gap:20px;flex-wrap:wrap;color:var(--muted);font-size:.7rem;margin:6px 0 13px}.legend i{display:inline-block;vertical-align:middle;width:16px;height:3px;background:var(--accent);margin-right:5px}.legend .comparison{background:#b27847;height:2px}.value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}.value-box{padding:12px 14px;border:1px solid #e1e8df;border-radius:9px;background:#fbfcfa;min-width:0}.value-box small{font-size:.66rem;color:var(--muted);display:block}.value-box output,.value-box b{font:500 1.18rem ui-monospace,monospace;color:var(--accent);display:block;margin-top:5px;overflow-wrap:anywhere}.code-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 15px;background:#25424a;border-radius:10px 10px 0 0;margin:20px 0 0;color:#d8e7df;font:.68rem ui-monospace,monospace}.code{font:13px/1.85 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:4;background:#182e35;color:#e4ecea;padding:20px;margin:0 0 20px;border-radius:0 0 10px 10px;overflow:auto;max-width:100%}.keyword{color:#d7b3ff}.string{color:#c8e8a4}.number{color:#f7cf93}.comment{color:#a1bbb6}.code-note{font-size:.76rem;color:var(--muted);margin:10px 0 18px}.inline-result{font:500 .83rem ui-monospace,monospace;background:#f0f4ee;border:1px solid #dce6d9;padding:13px 16px;border-radius:8px;overflow-x:auto}.matrix-table{font:500 .78rem ui-monospace,monospace;text-align:center;table-layout:fixed}.matrix-table td,.matrix-table th{padding:10px 9px;text-align:center}.matrix-table .chosen-row{background:#e3f2e5}.matrix-table .chosen-col{background:#e8effc}.matrix-table .intersection{background:#e0e9cf;box-shadow:inset 0 0 0 2px #6b8a52}.matrix-title{font-size:.68rem;color:var(--muted);font-weight:600;margin:15px 0 -9px}.matrices{display:grid;grid-template-columns:1fr 1fr;gap:16px}.matrices>*{min-width:0}.matrix-output{grid-column:1/-1}.matrix-output .table-wrap{margin-bottom:0}.practice{background:#edf1ea;border:1px solid #dbe3d5;border-radius:12px;padding:20px 23px;margin:32px 0}.practice h3{margin:0 0 7px;font-size:1rem}.practice-intro{font-size:.76rem;color:var(--muted);margin:0 0 13px}.practice details{background:#fff;border:1px solid #dce4d8;border-radius:8px;margin:10px 0;overflow:hidden}.practice summary{cursor:pointer;list-style-position:inside;padding:13px 15px;font-size:.83rem;font-weight:600;line-height:1.7;min-height:48px}.answer{padding:0 15px 15px;font-size:.82rem;line-height:1.85;border-top:1px solid #edf1e9;margin:0 15px 0 0;padding-top:11px}.quiz{background:white;border:1px solid #dce4d8;border-radius:8px;padding:15px;margin:10px 0;font-size:.82rem}.quiz legend{font-size:.83rem;font-weight:650;padding:0 5px}.quiz fieldset{border:0;padding:0;margin:0;min-width:0}.quiz label{display:flex;align-items:flex-start;gap:9px;padding:8px;border:1px solid #e3e9df;border-radius:6px;margin:7px 0;cursor:pointer;line-height:1.6}.quiz input[type=radio]{margin-top:6px;accent-color:var(--accent)}.quiz button{margin-top:5px}.quiz-feedback{font-size:.8rem;margin:10px 0 0;border-radius:6px;padding:0}.quiz-feedback:not(:empty){padding:10px 12px;background:var(--yellow)}.quiz-feedback[data-correct=true]{background:var(--mint)}.quiz input[type=number]{width:140px;max-width:100%;padding:8px 12px;border:1px solid #afc2b1;border-radius:6px;margin-right:8px;min-height:44px}.code-steps{display:grid;grid-template-columns:36px 1fr;gap:12px 13px;margin:20px 0}.code-steps .step-index{font:600 .75rem ui-monospace,monospace;color:var(--accent);padding:6px 0}.code-steps p{font-size:.84rem;margin:0 0 12px}.hidden-bars{display:grid;grid-template-columns:repeat(20,1fr);gap:3px;height:80px;align-items:center;border-top:1px solid #edf0e9;border-bottom:1px solid #edf0e9;margin:17px 0;position:relative}.hidden-bars:before{content:"";position:absolute;top:50%;left:0;right:0;height:1px;background:#c3d5c8}.bar-track{position:relative;height:100%;min-width:0;display:flex;align-items:center;justify-content:center}.hidden-bar{position:absolute;width:70%;bottom:50%;background:#46856b;min-height:1px}.hidden-bar.negative{background:#bf815f;bottom:auto;top:50%}.bar-track.selected{background:#f0f5e9;outline:1px solid #789867}.glossary{display:grid;grid-template-columns:1fr 1fr;gap:0 30px;margin:20px 0}.glossary div{border-bottom:1px solid var(--line);padding:13px 0}.glossary dt{font-weight:700;font-size:.85rem}.glossary dd{margin:4px 0 0;font-size:.81rem;color:var(--muted);line-height:1.8}.source-notes details{padding:12px 0;border-bottom:1px solid var(--line);font-size:.83rem}.source-notes summary{cursor:pointer;font-weight:650;min-height:40px}.source-notes p{font-size:.82rem}.footer{margin-top:55px;border-top:1px solid var(--line);padding-top:24px;display:flex;gap:20px;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--muted)}.footer a{white-space:nowrap}.end-links{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding-top:20px;margin-top:30px;font-size:.8rem}.end-links a{text-decoration:none;font-weight:650}.divider{border:0;border-top:1px solid var(--line);margin:30px 0}.nojs{background:var(--yellow);padding:15px 20px;border:1px solid #ddca87;border-radius:8px;font-size:.85rem}.coverage td:first-child{width:43%}#menu-shade{display:none}[hidden]{display:none!important}
+@media(min-width:1500px){.reader{max-width:1080px;padding-left:70px;padding-right:70px}.sidebar{width:276px;padding-left:29px;padding-right:29px}.shell{margin-left:276px}}
+@media(max-width:1100px){.sidebar{width:222px;padding-left:16px;padding-right:16px}.shell{margin-left:222px}.reader{padding:35px 30px 65px}.topbar{padding:10px 25px}.hero-grid{grid-template-columns:1.35fr .65fr;gap:12px}.hero-art{margin:0}.hero h1{font-size:3.2rem}.hero-art figcaption{font-size:.58rem}.two-col{gap:16px}}
+@media(max-width:800px){.sidebar{transform:translateX(-100%);width:265px;transition:transform .18s}.sidebar.open{transform:translateX(0)}.shell{margin-left:0}.topbar{padding:10px 20px}.top-actions{gap:8px}#menu-toggle{display:inline-block}#menu-shade.visible{display:block;position:fixed;inset:0;background:#132c3270;z-index:35;border:0;border-radius:0;width:100%;height:100%;padding:0}.reader{max-width:800px;padding:30px 30px 65px}.hero h1{font-size:3.65rem}.hero-art{max-width:245px}.hero-grid{grid-template-columns:1.2fr .8fr}.hero .eyebrow{font-size:.63rem}}
+@media(max-width:560px){body{font-size:15px;line-height:1.85}.reader{padding:23px 19px 45px}.topbar{padding:9px 15px;min-height:61px;gap:8px}.crumbs{font-size:.6rem;gap:5px}.crumbs .crumb-extra{display:none}.offline{display:none}.topbar button{padding:5px 10px;min-height:44px}.hero{padding:13px 0 28px}.hero h1{font-size:3.2rem;margin-bottom:20px}.hero-grid{display:block}.hero-art{max-width:320px;margin:15px auto}.hero-art svg{max-height:170px}.hero-art figcaption{font-size:.64rem}.hero p{font-size:.93rem}.intro-grid{grid-template-columns:1fr;gap:12px}.intro-box{padding:18px 20px}.hero-meta{gap:6px}.tag{font-size:.63rem}.section-heading{gap:12px}.section-heading h2{font-size:1.8rem}.section-number{flex-basis:34px;height:34px;border-radius:8px;font-size:.69rem}.section-kicker{font-size:.6rem}.source-ref{font-size:.65rem}.lesson{margin-top:50px!important}.lead{font-size:1rem}.two-col{grid-template-columns:1fr;gap:3px}.callout{padding:14px 16px;font-size:.85rem}.figure-panel{padding:12px}.lab-header{padding:16px 17px}.lab-body{padding:17px}.lab-foot{padding:11px 17px}.controls{gap:12px 16px}.control-name{font-size:.72rem;gap:5px}.control select{font-size:.77rem;padding-left:6px}.lab-header h3{font-size:1rem}.value-grid{gap:7px}.value-box{padding:9px}.value-box small{font-size:.6rem}.value-box output,.value-box b{font-size:1rem}.readout{padding:13px 14px;font-size:.78rem}.big-answer{font-size:1.7rem}.matrices{grid-template-columns:1fr;gap:0}.matrix-output{grid-column:auto}.flow{gap:5px;font-size:.7rem}.flow .node{padding:11px 5px}.flow .node small{font-size:.61rem}.flow .arrow{font-size:.9rem}.practice{padding:17px 15px}.practice summary{padding:12px;font-size:.8rem}.quiz{padding:12px}.quiz legend{font-size:.8rem}.glossary{grid-template-columns:1fr}.code{font-size:12px;padding:16px;max-height:650px}.equation{padding:18px 10px}.equation math{font-size:1.05rem}.footer{align-items:flex-start}.source-notes summary{line-height:1.75}th,td{padding:10px 11px}.hidden-bars{gap:2px;height:70px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+@media print{body{font:11pt/1.6 Georgia,serif;background:white;color:black}.sidebar,.topbar,.skip,#menu-shade,.button-row,.end-links,.footer a{display:none!important}.shell{margin:0}.reader{max-width:none;padding:0}.hero h1{font-size:36pt}.hero-art{max-width:210px}.hero-grid{grid-template-columns:1fr 210px}.lab,.callout,.practice,.equation,.figure-panel{box-shadow:none;break-inside:avoid}.lesson{margin-top:30px!important}.code{color:black;background:#f1f1f1;font-size:9pt;white-space:pre-wrap;max-height:none}.keyword,.string,.number,.comment{color:black}.code-heading{background:#e5e5e5;color:black}.table-wrap{overflow:visible}.equation{overflow:visible}.equation math{font-size:12pt}.practice details>.answer{display:block!important}.chart{max-height:220px}.hero-meta .tag{border-color:#aaa}a{color:black}.source-notes details>p{display:block}section{scroll-margin-top:0}.offline{display:none}h2,h3{break-after:avoid}p{orphans:3;widows:3}.controls{display:none}.lab-foot{background:#f6f6f6}.intro-grid{grid-template-columns:1fr 1fr}.nojs{display:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to lesson</a>
+<aside class="sidebar" id="study-nav" aria-label="Study navigation">
+  <a class="brand" href="#start"><span class="brand-mark" aria-hidden="true">N∕N</span><span>The study room<small>NATURAL LANGUAGE PROCESSING</small></span></a>
+  <p class="sidebar-heading">Chapter 01 · Your study path</p>
+  <nav class="toc" aria-label="Contents">
+    <a href="#start" class="active" aria-current="location"><span>↗</span> Start here</a>
+    <a href="#neurons"><span>01</span> Neurons &amp; weighted sums</a>
+    <a href="#layers"><span>02</span> Vectors become layers</a>
+    <a href="#activations"><span>03</span> Gates &amp; activations</a>
+    <a href="#network"><span>04</span> Put a network together</a>
+    <a href="#tensors"><span>05</span> Meet PyTorch tensors</a>
+    <a href="#pytorch"><span>06</span> Affine layers &amp; batches</a>
+    <a href="#build"><span>07</span> Build the source network</a>
+    <a href="#reference"><span>∑</span> Glossary &amp; source notes</a>
+  </nav>
+  <div class="sidebar-bottom"><strong>One idea at a time.</strong><br>Read → calculate → explore → practice.<div class="study-progress" role="progressbar" aria-label="Position in the study guide" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="reading-progress"></span></div><span id="progress-caption">At the beginning</span><p>Personal study copy<br>Source sections 1 &amp; 1.1</p></div>
+</aside>
+<button id="menu-shade" type="button" aria-label="Close navigation" hidden tabindex="-1"></button>
+<div class="shell">
+  <header class="topbar"><div class="crumbs"><b>NLP</b><span>/</span><span>CHAPTER 01</span><span class="crumb-extra">/ SELF-STUDY GUIDE</span></div><div class="top-actions"><span class="offline">Works offline</span><button type="button" id="print-guide">Print / PDF</button><button type="button" id="menu-toggle" aria-controls="study-nav" aria-expanded="false">Contents</button></div></header>
+  <main class="reader" id="main">
+  <noscript><p class="nojs">JavaScript is disabled. The lessons, equations, code, and collapsible answers remain readable. Enable JavaScript to use the interactive demonstrations and quizzes.</p></noscript>
+  <section class="hero" id="start" aria-labelledby="guide-title">
+    <p class="eyebrow">A mathematical perspective · Made easier to understand</p>
+    <div class="hero-grid"><div><h1 id="guide-title">Artificial<br><em>Neural Network</em></h1><p>Follow a number from an input, through a weighted sum and an activation, to a working PyTorch model. Understand the mathematics. Then see what the code is doing.</p></div><figure class="hero-art"><svg viewBox="0 0 300 240" role="img" aria-labelledby="hero-graphic-title"><title id="hero-graphic-title">Two inputs flow through three hidden neurons to one output</title><defs><pattern id="dot-grid" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#d9e4d8"/></pattern></defs><rect x="0" y="0" width="300" height="240" rx="16" fill="url(#dot-grid)"/><g stroke="#80a392" stroke-width="1.6"><path d="M53 85L150 48M53 85L150 120M53 85L150 192M53 155L150 48M53 155L150 120M53 155L150 192M150 48L247 120M150 120L247 120M150 192L247 120"/></g><g fill="#f7faf3" stroke="#55886c" stroke-width="1.5"><circle cx="53" cy="85" r="18"/><circle cx="53" cy="155" r="18"/><circle cx="150" cy="48" r="20"/><circle cx="150" cy="120" r="20"/><circle cx="150" cy="192" r="20"/></g><circle cx="247" cy="120" r="23" fill="#176b5b"/><g text-anchor="middle" font-family="Georgia,serif" font-size="16" fill="#23624e"><text x="53" y="90">x₁</text><text x="53" y="160">x₂</text><text x="150" y="54">σ</text><text x="150" y="126">σ</text><text x="150" y="198">σ</text><text x="247" y="126" fill="white">y</text></g></svg><figcaption>Numbers in. A function in between. Numbers out.</figcaption></figure></div>
+    <div class="hero-meta"><span class="tag green">Beginner · Simple English</span><span class="tag">Source: §1 + §1.1</span><span class="tag">7 interactive labs</span><span class="tag">21 practice questions</span></div>
+  </section>
+  <div class="intro-grid"><div class="intro-box"><h2>By the end, you can…</h2><ul><li>Calculate what one artificial neuron produces.</li><li>Read a layer as a matrix and a bias vector.</li><li>Explain why activation functions matter.</li><li>Follow the source’s PyTorch network line by line.</li></ul></div><div class="intro-box"><h2>A good way to study</h2><ul><li>Try the small arithmetic examples on paper.</li><li>Change one lab control at a time.</li><li>Predict an output before you reveal an answer.</li><li>Run the Python examples in order when you are ready.</li></ul></div></div>
+  <p class="scope"><strong>Scope.</strong> This guide follows <a href="Ch1-A_Mathematical_Perspective.html#s-2">Section 1, Artificial Neural Network</a>, including its subsection <a href="Ch1-A_Mathematical_Perspective.html#s-3">1.1, Coding Neural Networks with PyTorch</a>. Analogies, worked numbers, browser labs, and practice questions are added learning support. They are not an official examination. The guide does not cover Sections 0 or 2–10.</p>
+  <div class="callout review"><strong>Prerequisite Review</strong><p>You need addition, multiplication, negative numbers, and the idea of a function: an input goes into a rule and an output comes out. A <em>vector</em> is an ordered list of numbers; a <em>matrix</em> is a rectangular table of numbers. You will learn the needed operations below. For the code, some basic Python helps; unfamiliar syntax is explained as it appears.</p><p>Read <span class="math">ℝ</span> as “the real numbers.” <span class="math">ℝ<sup>n</sup></span> means vectors with <em>n</em> real-number entries. For example, <span class="math">(2, 3) ∈ ℝ²</span>. The symbol <span class="math">∈</span> means “belongs to.”</p></div>
+
+  <section class="lesson" id="neurons" aria-labelledby="neurons-title">
+  <div class="section-heading"><span class="section-number">01</span><div><p class="section-kicker">The smallest useful building block</p><h2 id="neurons-title">What does a neuron do?</h2><p class="source-ref">Source: <a href="Ch1-A_Mathematical_Perspective.html#s-2">§1 — Artificial Neural Network</a>, signals, neurons, and weighted sums.</p></div></div>
+  <p class="lead">An artificial neural network is a function built from many small calculations. Each artificial neuron receives numbers, combines them, and passes a number forward.</p>
+  <p>The lecture begins with a visual signal moving through groups of biological neurons until a judgement is made, such as “cat” or “flower.” This motivates an artificial network with an <strong>input layer</strong>, <strong>hidden layers</strong>, and an <strong>output layer</strong>. It is a useful mathematical analogy, rather than a detailed model of the brain.</p>
+  <p>In an application, an image must first be represented by numbers, such as pixel values. In language applications, words also need a numerical representation. This section studies the function that processes those numbers; it does not yet teach image encoding or word embeddings.</p>
+  <figure class="figure-panel"><svg viewBox="0 0 720 250" role="img" aria-labelledby="layers-diagram-title layers-diagram-desc"><title id="layers-diagram-title">A network with input, two hidden layers, and an output</title><desc id="layers-diagram-desc">Three input values travel through two layers of three neurons to two output values. Lines represent weighted connections. Information flows left to right.</desc><defs><marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#597e68"/></marker></defs><g stroke="#b3cbbb" stroke-width="1.2"><path d="M75 65L260 65M75 65L260 125M75 65L260 185M75 125L260 65M75 125L260 125M75 125L260 185M75 185L260 65M75 185L260 125M75 185L260 185M260 65L455 65M260 65L455 125M260 65L455 185M260 125L455 65M260 125L455 125M260 125L455 185M260 185L455 65M260 185L455 125M260 185L455 185M455 65L640 95M455 65L640 155M455 125L640 95M455 125L640 155M455 185L640 95M455 185L640 155"/></g><g fill="#eaf3e7" stroke="#629373" stroke-width="1.5"><circle cx="75" cy="65" r="18"/><circle cx="75" cy="125" r="18"/><circle cx="75" cy="185" r="18"/><circle cx="260" cy="65" r="20"/><circle cx="260" cy="125" r="20"/><circle cx="260" cy="185" r="20"/><circle cx="455" cy="65" r="20"/><circle cx="455" cy="125" r="20"/><circle cx="455" cy="185" r="20"/></g><g fill="#176b5b"><circle cx="640" cy="95" r="22"/><circle cx="640" cy="155" r="22"/></g><g text-anchor="middle" font-size="13" fill="#29483d"><text x="75" y="24">Input</text><text x="260" y="24">Hidden layer 1</text><text x="455" y="24">Hidden layer 2</text><text x="640" y="24">Output</text><text x="75" y="231">X⁰</text><text x="260" y="231">X¹</text><text x="455" y="231">X²</text><text x="640" y="231">X³</text><text x="75" y="70">x₁</text><text x="75" y="130">x₂</text><text x="75" y="190">x₃</text></g><path d="M105 231L208 231M290 231L403 231M485 231L592 231" stroke="#597e68" marker-end="url(#arrowhead)"/></svg><figcaption>Adapted from the source’s information-flow diagram. Each line has a weight. This simplified drawing shows a fully connected example; architecture determines which connections exist.</figcaption></figure>
+  <h3>Read the lecturer’s indices</h3>
+  <div class="table-wrap"><table><thead><tr><th>Symbol</th><th>Meaning</th><th>How to read it</th></tr></thead><tbody><tr><td><span class="math">N<sub>j</sub><sup>i</sup></span></td><td>Neuron <em>j</em> in layer <em>i</em></td><td>The upper index identifies a layer. It is not a power.</td></tr><tr><td><span class="math">x<sub>j</sub><sup>i</sup></span></td><td>The numerical output of that neuron</td><td>A neuron is the calculation; its output is a number.</td></tr><tr><td><span class="math">k<sub>i</sub></span></td><td>Number of neurons in layer <em>i</em></td><td>The layer’s width.</td></tr><tr><td><span class="math">X<sup>i</sup></span></td><td>All outputs of layer <em>i</em> in one vector</td><td>Capital X is a vector; lowercase x is an entry.</td></tr><tr><td><span class="math">L</span></td><td>Number of affine layers in the formal definition</td><td>The input is layer 0. In the drawing, L = 3.</td></tr></tbody></table></div>
+  <h3>Why a plain sum is not enough</h3>
+  <p>Imagine a decision based on two numerical clues. If one clue is more useful, it should have a different influence. A <strong>weight</strong> is the multiplier that controls that influence. A positive weight keeps the sign of an input; a negative weight reverses it. A zero weight removes that input’s contribution.</p>
+  <p>For a receiving neuron, multiply each input by its connection weight and add the products. This is a <strong>weighted sum</strong>.</p>
+  <div class="equation" tabindex="0" role="group" aria-label="Weighted sum: s sub j in layer i equals the sum of each input times its weight, or the transposed weight vector times the previous layer vector."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msubsup><mi>s</mi><mi>j</mi><mi>i</mi></msubsup><mo>=</mo><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><msub><mi>k</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub></munderover><msubsup><mi>w</mi><mrow><mi>k</mi><mo>,</mo><mi>j</mi></mrow><mi>i</mi></msubsup><msubsup><mi>x</mi><mi>k</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msubsup><mo>=</mo><msup><mrow><mo>(</mo><msubsup><mi>W</mi><mi>j</mi><mi>i</mi></msubsup><mo>)</mo></mrow><mi>T</mi></msup><msup><mi>X</mi><mrow><mtext>i−1</mtext></mrow></msup></mrow></math></div>
+  <div class="table-wrap"><table><thead><tr><th>Part of the equation</th><th>Meaning</th></tr></thead><tbody><tr><td><span class="math">s<sub>j</sub><sup>i</sup></span></td><td>The raw weighted sum for neuron j in layer i. We use <em>s</em> to distinguish it from the final activated output.</td></tr><tr><td><span class="math">∑</span>, <span class="math">k = 1, …, k<sub>i−1</sub></span></td><td>Add one product for every input from the previous layer.</td></tr><tr><td><span class="math">w<sub>k,j</sub><sup>i</sup></span></td><td>Weight from source neuron k in layer i−1 to receiving neuron j in layer i.</td></tr><tr><td><span class="math">x<sub>k</sub><sup>i−1</sup></span></td><td>The value sent by that source neuron.</td></tr><tr><td><span class="math">W<sub>j</sub><sup>i</sup></span>, <span class="math">X<sup>i−1</sup></span></td><td>Column vectors holding all incoming weights and all incoming values, respectively.</td></tr><tr><td><span class="math">T</span></td><td>Transpose: turn a column into a row, so row × column gives one number.</td></tr></tbody></table></div>
+  <div class="equation" tabindex="0" role="group" aria-label="A neuron weight vector and the previous layer output are both column vectors with k sub i minus 1 entries."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msubsup><mi>W</mi><mi>j</mi><mi>i</mi></msubsup><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><msubsup><mi>w</mi><mrow><mn>1</mn><mo>,</mo><mi>j</mi></mrow><mi>i</mi></msubsup></mtd></mtr><mtr><mtd><mo>⋮</mo></mtd></mtr><mtr><mtd><msubsup><mi>w</mi><mrow><msub><mi>k</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>,</mo><mi>j</mi></mrow><mi>i</mi></msubsup></mtd></mtr></mtable><mo>]</mo></mrow><mo>,</mo><msup><mi>X</mi><mrow><mtext>i−1</mtext></mrow></msup><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><msubsup><mi>x</mi><mn>1</mn><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msubsup></mtd></mtr><mtr><mtd><mo>⋮</mo></mtd></mtr><mtr><mtd><msubsup><mi>x</mi><msub><mi>k</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msubsup></mtd></mtr></mtable><mo>]</mo></mrow></mrow></math></div>
+  <p>This row-times-column calculation is a <strong>dot product</strong>. It is just “multiply matching entries, then add.” Both vectors must have the same number of entries.</p>
+  <h3>Worked Example · One neuron, two inputs</h3>
+  <p>Let the input values be <span class="math">x₁ = 2, x₂ = 3</span>, with weights <span class="math">w₁ = 0.5, w₂ = 2</span>. A <strong>bias</strong> adds an adjustable offset after the weighted sum. Here use <span class="math">b = 1</span>.</p>
+  <ol class="steps"><li><strong>Find the two contributions.</strong><p>0.5 × 2 = 1, and 2 × 3 = 6.</p></li><li><strong>Add them to get the weighted sum.</strong><div class="calc">s = 1 + 6 = 7</div></li><li><strong>Add the bias.</strong><div class="calc">z = s + b = 7 + 1 = 8</div><p>The number z is the <em>pre-activation</em>: the value before applying an activation function.</p></li><li><strong>Apply ReLU.</strong><div class="calc">output = max(0, z) = max(0, 8) = 8</div><p>ReLU keeps positive values and replaces nonpositive values with 0. We study it carefully in Part 03.</p></li></ol>
+  <p>This equation is useful every time a dense neuron computes its next output. One neuron produces one number; a layer performs many of these calculations together.</p>
+  <div class="lab" id="neuron-lab"><div class="lab-header"><div><span class="lab-label">INTERACTIVE LAB</span><h3>Build a neuron by hand</h3></div><span class="lab-number">01 / 07</span></div><div class="lab-body"><p class="lab-intro">Change one number. Predict which contribution will grow, shrink, or become negative. This lab always uses an additive bias and ReLU.</p>
+    <div class="controls"><label class="control" for="neuron-x1"><span class="control-name">Input x₁ <output for="neuron-x1" id="neuron-x1-value">2</output></span><input id="neuron-x1" type="range" min="-4" max="4" step="0.5" value="2"><span class="range-limits"><span>−4</span><span>4</span></span></label><label class="control" for="neuron-x2"><span class="control-name">Input x₂ <output for="neuron-x2" id="neuron-x2-value">3</output></span><input id="neuron-x2" type="range" min="-4" max="4" step="0.5" value="3"><span class="range-limits"><span>−4</span><span>4</span></span></label><label class="control" for="neuron-w1"><span class="control-name">Weight w₁ <output for="neuron-w1" id="neuron-w1-value">0.5</output></span><input id="neuron-w1" type="range" min="-3" max="3" step="0.25" value="0.5"><span class="range-limits"><span>−3</span><span>3</span></span></label><label class="control" for="neuron-w2"><span class="control-name">Weight w₂ <output for="neuron-w2" id="neuron-w2-value">2</output></span><input id="neuron-w2" type="range" min="-3" max="3" step="0.25" value="2"><span class="range-limits"><span>−3</span><span>3</span></span></label><label class="control" for="neuron-bias"><span class="control-name">Additive bias b <output for="neuron-bias" id="neuron-bias-value">1</output></span><input id="neuron-bias" type="range" min="-5" max="5" step="0.25" value="1"><span class="range-limits"><span>−5</span><span>5</span></span></label></div>
+    <svg id="neuron-diagram" class="chart" viewBox="0 0 650 190" role="img" aria-labelledby="neuron-svg-title"><title id="neuron-svg-title">Two weighted inputs are added with a bias, then passed through ReLU</title><path id="neuron-edge1" d="M100 50L275 95" fill="none" stroke="#608b72" stroke-width="2"/><path id="neuron-edge2" d="M100 140L275 95" fill="none" stroke="#608b72" stroke-width="3"/><path d="M310 95H403M478 95H550" stroke="#608b72" stroke-width="2" marker-end="url(#arrowhead)"/><g fill="#f0f5ec" stroke="#95b19a"><circle cx="80" cy="50" r="27"/><circle cx="80" cy="140" r="27"/><circle cx="292" cy="95" r="29"/><rect x="405" y="68" width="73" height="54" rx="10"/></g><g font-size="15" text-anchor="middle" fill="#2a5140"><text id="neuron-node1" x="80" y="56">2</text><text id="neuron-node2" x="80" y="146">3</text><text x="292" y="100">Σ+b</text><text x="441" y="101">ReLU</text><text id="neuron-diagram-output" x="595" y="105" font-size="29" fill="#176b5b">8</text><text id="neuron-contribution1" x="172" y="48" font-size="13">0.5 × 2 = 1</text><text id="neuron-contribution2" x="172" y="153" font-size="13">2 × 3 = 6</text><text x="80" y="187" font-size="12">inputs</text><text x="293" y="158" font-size="12">pre-activation</text><text x="593" y="140" font-size="12">output</text></g></svg>
+    <div class="readout" id="neuron-readout" aria-live="polite" aria-atomic="true">s = (0.5 × 2) + (2 × 3) = 7<br>z = 7 + 1 = 8<br>ReLU(z) = max(0, 8)<strong class="big-answer" id="neuron-answer">8</strong></div>
+    <div class="button-row"><button type="button" id="neuron-blocked">Try a blocked signal</button><button type="button" id="neuron-reset">Reset worked example</button></div>
+  </div><div class="lab-foot">Added learning example. Values are chosen for arithmetic practice, not learned from data. A thicker line means a larger absolute weight; the equations also show its sign.</div></div>
+  <div class="callout"><strong>Key Idea</strong>A weight multiplies an input. A bias adds an offset. An activation changes the resulting number. Keep those three jobs separate.</div>
+  <div class="practice"><h3>Check Your Understanding · Neurons</h3><p class="practice-intro">Added practice · Try each question before opening its answer.</p>
+    <details><summary>1. With x = (2, 3), w = (−1, 2), and b = 1, what are s, z, and ReLU(z)?</summary><div class="answer">s = (−1 × 2) + (2 × 3) = −2 + 6 = 4. Then z = 4 + 1 = 5, and ReLU(5) = 5.</div></details>
+    <details><summary>2. If a connection weight is 0, does that input affect this neuron?</summary><div class="answer">No. That input’s contribution is 0 × input = 0. Other inputs and the bias may still produce a nonzero output.</div></details>
+    <details><summary>3. Does the 2 in X² mean “square every input”?</summary><div class="answer">No. In the lecturer’s layer notation, the upper index identifies layer 2. By contrast, in the Python expression <code>b ** 2</code>, 2 really is a power.</div></details>
+  </div><div class="end-links"><a href="#start">← Start here</a><a href="#layers">Next: vectors become layers →</a></div>
+  </section>
+
+  <section class="lesson" id="layers" aria-labelledby="layers-title"><div class="section-heading"><span class="section-number">02</span><div><p class="section-kicker">Many neurons, one calculation</p><h2 id="layers-title">Vectors become layers</h2><p class="source-ref">Source: <a href="Ch1-A_Mathematical_Perspective.html#s-2">§1</a>, dot products, layer matrices, and the linear-layer problem.</p></div></div>
+  <p class="lead">A layer is a group of neurons that receives the same input vector. Each neuron has its own weights. Put those weight vectors into rows, and you can calculate the whole layer with one matrix multiplication.</p>
+  <p>A vector’s order matters. If <span class="math">X = (2, 3)<sup>T</sup></span>, the first entry is 2 and the second is 3. A matrix row is the recipe for one output: match each entry of the row with the corresponding input, multiply, then add.</p>
+  <div class="equation" tabindex="0" role="group" aria-label="Layer matrix: one row per receiving neuron, with the transpose of that neuron’s weight vector in each row."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msup><mi>W</mi><mrow><mtext>i</mtext></mrow></msup><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><msubsup><mi>w</mi><mtext>1,1</mtext><mi>i</mi></msubsup></mtd><mtd><msubsup><mi>w</mi><mtext>2,1</mtext><mi>i</mi></msubsup></mtd><mtd><mo>⋯</mo></mtd><mtd><msubsup><mi>w</mi><mtext>kᵢ₋₁,1</mtext><mi>i</mi></msubsup></mtd></mtr><mtr><mtd><msubsup><mi>w</mi><mtext>1,2</mtext><mi>i</mi></msubsup></mtd><mtd><msubsup><mi>w</mi><mtext>2,2</mtext><mi>i</mi></msubsup></mtd><mtd><mo>⋯</mo></mtd><mtd><msubsup><mi>w</mi><mtext>kᵢ₋₁,2</mtext><mi>i</mi></msubsup></mtd></mtr><mtr><mtd><mo>⋮</mo></mtd><mtd><mo>⋮</mo></mtd><mtd><mo>⋱</mo></mtd><mtd><mo>⋮</mo></mtd></mtr><mtr><mtd><msubsup><mi>w</mi><mtext>1,kᵢ</mtext><mi>i</mi></msubsup></mtd><mtd><msubsup><mi>w</mi><mtext>2,kᵢ</mtext><mi>i</mi></msubsup></mtd><mtd><mo>⋯</mo></mtd><mtd><msubsup><mi>w</mi><mtext>kᵢ₋₁,kᵢ</mtext><mi>i</mi></msubsup></mtd></mtr></mtable><mo>]</mo></mrow><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><msup><mrow><mo>(</mo><msubsup><mi>W</mi><mn>1</mn><mi>i</mi></msubsup><mo>)</mo></mrow><mi>T</mi></msup></mtd></mtr><mtr><mtd><mo>⋮</mo></mtd></mtr><mtr><mtd><msup><mrow><mo>(</mo><msubsup><mi>W</mi><msub><mi>k</mi><mi>i</mi></msub><mi>i</mi></msubsup><mo>)</mo></mrow><mi>T</mi></msup></mtd></mtr></mtable><mo>]</mo></mrow></mrow></math></div>
+  <p>The source writes a connection as <span class="math">w<sub>k,j</sub><sup>i</sup></span>, with <em>source index first</em> and <em>receiving index second</em>. That connection goes in <strong>row j, column k</strong> of the matrix. This explains why the first matrix row above contains w₁,₁, w₂,₁, and so on.</p>
+  <div class="callout tip"><strong>Beginner Tip · Check the dimensions</strong><p>An input with n entries and an output with m entries needs an <strong>m × n</strong> matrix: m rows, n columns. The inner dimensions match in <span class="math">(m × n)(n × 1) = m × 1</span>. A superscript such as Wⁱ labels the layer; it does not change this rule.</p></div>
+  <div class="equation" tabindex="0" role="group" aria-label="Without bias or activation, layer i outputs W i times the previous output; W has k i rows and k i minus 1 columns."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msup><mi>X</mi><mrow><mtext>i</mtext></mrow></msup><mo>=</mo><msup><mi>W</mi><mrow><mtext>i</mtext></mrow></msup><msup><mi>X</mi><mrow><mtext>i−1</mtext></mrow></msup><mo>,</mo><msup><mi>W</mi><mrow><mtext>i</mtext></mrow></msup><mo>∈</mo><msup><mi>ℝ</mi><mrow><msub><mi>k</mi><mi>i</mi></msub><mo>×</mo><msub><mi>k</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow></msup></mrow></math></div>
+  <p>Here kᵢ₋₁ is the input width and kᵢ is the output width. This particular equation is the lecture’s early model, <em>before</em> adding biases and activations.</p>
+  <h3>Worked Example · Two inputs, three outputs</h3>
+  <div class="equation" tabindex="0" role="group" aria-label="A 3 by 2 matrix times a 2 entry vector gives a 3 entry vector: 7, negative 1, negative 0.5."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mo>[</mo><mtable><mtr><mtd><mn>.5</mn></mtd><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>1</mn></mtd><mtd><mn>−1</mn></mtd></mtr><mtr><mtd><mn>−1</mn></mtd><mtd><mn>.5</mn></mtd></mtr></mtable><mo>]</mo></mrow><mrow><mo>[</mo><mtable><mtr><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>7</mn></mtd></mtr><mtr><mtd><mn>−1</mn></mtd></mtr><mtr><mtd><mn>−.5</mn></mtd></mtr></mtable><mo>]</mo></mrow></mrow></math></div>
+  <ol class="steps"><li><strong>First output.</strong><div class="calc">0.5 × 2 + 2 × 3 = 1 + 6 = 7</div></li><li><strong>Second output.</strong><div class="calc">1 × 2 + (−1) × 3 = 2 − 3 = −1</div></li><li><strong>Third output.</strong><div class="calc">(−1) × 2 + 0.5 × 3 = −2 + 1.5 = −0.5</div></li></ol>
+  <p>Each row reads the same input (2, 3), but uses different weights. The output vector (7, −1, −0.5) contains all three results. This is useful for implementing a whole layer efficiently.</p>
+  <h3>A network as a sequence of states</h3>
+  <p>The lecture calls the layer-by-layer rule a <strong>dynamical system</strong>: begin with a state X⁰, then update it to the next state. Here the index counts <em>layers</em>, not time steps.</p>
+  <div class="equation" tabindex="0" role="group" aria-label="Layer recurrence: start with X zero as input, then compute the next layer by matrix multiplication, up to layer L."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msup><mi>X</mi><mrow><mtext>0</mtext></mrow></msup><mo>=</mo><mtext>input</mtext><mo>;</mo><msup><mi>X</mi><mrow><mtext>i+1</mtext></mrow></msup><mo>=</mo><msup><mi>W</mi><mrow><mtext>i+1</mtext></mrow></msup><msup><mi>X</mi><mrow><mtext>i</mtext></mrow></msup><mo>,</mo><mi>i</mi><mo>=</mo><mn>0</mn><mo>,</mo><mo>…</mo><mo>,</mo><mi>L</mi><mo>−</mo><mn>1</mn></mrow></math></div>
+  <div class="flow" aria-label="Successive layer outputs"><div class="node">X⁰<small>input</small></div><span class="arrow" aria-hidden="true">→</span><div class="node">X¹ = W¹X⁰<small>first layer</small></div><span class="arrow" aria-hidden="true">→</span><div class="node">X² = W²X¹<small>next layer</small></div><span class="arrow" aria-hidden="true">→</span><div class="node">Xᴸ<small>last layer</small></div></div>
+  <h3>The surprising problem: all-linear layers collapse</h3>
+  <p>Passing through two linear layers gives W²(W¹X⁰). Matrix multiplication is associative, so you can multiply the matrices first. The same reasoning works for any number of layers.</p>
+  <div class="equation" tabindex="0" role="group" aria-label="A composition of linear layers is a single linear map whose matrix is the product in reverse application order."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msup><mi>X</mi><mrow><mtext>L</mtext></mrow></msup><mo>=</mo><msup><mi>W</mi><mrow><mtext>L</mtext></mrow></msup><msup><mi>W</mi><mrow><mtext>L−1</mtext></mrow></msup><mo>⋯</mo><msup><mi>W</mi><mrow><mtext>1</mtext></mrow></msup><msup><mi>X</mi><mrow><mtext>0</mtext></mrow></msup><mo>=</mo><mi>W</mi><msup><mi>X</mi><mrow><mtext>0</mtext></mrow></msup></mrow></math></div>
+  <p>For example, choose <span class="math">W¹ = [[1, 2], [−1, 1]]</span>, <span class="math">W² = [[2, −1]]</span>, and <span class="math">X⁰ = (1, 3)<sup>T</sup></span>.</p>
+  <ol class="steps"><li><strong>Compute the hidden vector.</strong><div class="calc">X¹ = (1×1 + 2×3, −1×1 + 1×3)ᵀ = (7, 2)ᵀ</div></li><li><strong>Compute the final result.</strong><div class="calc">X² = 2×7 − 1×2 = 12</div></li><li><strong>Combine the matrices instead.</strong><div class="calc">W²W¹ = [2×1 + (−1)×(−1), 2×2 + (−1)×1] = [3, 3]<br>[3, 3] × (1, 3)ᵀ = 3×1 + 3×3 = 12</div></li></ol>
+  <p>Two layers produced exactly the same function as one matrix. More linear layers alone do not create a more expressive class of functions.</p>
+  <div class="callout tip"><strong>Extra Explanation · Biases alone do not fix this</strong><p>Two affine layers still combine into one affine map:</p><div class="equation" tabindex="0" role="group" aria-label="Two affine layers without activation collapse to W two W one x plus W two b one plus b two."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><msub><mi>Af</mi><mn>2</mn></msub><mrow><mo>(</mo><mrow><msub><mi>Af</mi><mn>1</mn></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>)</mo></mrow></mrow><mo>=</mo><mrow><mo>(</mo><mrow><msup><mi>W</mi><mrow><mtext>2</mtext></mrow></msup><msup><mi>W</mi><mrow><mtext>1</mtext></mrow></msup></mrow><mo>)</mo></mrow><mi>x</mi><mo>+</mo><msup><mi>W</mi><mrow><mtext>2</mtext></mrow></msup><msup><mi>b</mi><mrow><mtext>1</mtext></mrow></msup><mo>+</mo><msup><mi>b</mi><mrow><mtext>2</mtext></mrow></msup></mrow></math></div><p>The product W²W¹ is the new matrix, and W²b¹ + b² is the new bias. What prevents this general collapse is a <strong>nonlinear activation</strong> between the affine maps.</p></div>
+  <div class="callout warning"><strong>Source notation note</strong><p>In the paragraph about another neuron in layer i, the source refers once to W<sub>m</sub><sup>i−1</sup>. Its preceding definitions and the next matrix equation require W<sub>m</sub><sup>i</sup>: weights belong to the layer receiving the signal. This guide uses that consistent index.</p></div>
+  <div class="practice"><h3>Check Your Understanding · Layers</h3><p class="practice-intro">Added practice · Shape checks prevent many coding errors.</p>
+    <form class="quiz" data-kind="choice" data-answer="b" data-explanation="The output needs 3 entries, so there are 3 rows. Each row reads all 4 inputs, so there are 4 columns."><fieldset><legend>4. A layer takes 4 inputs and produces 3 outputs. What is W’s shape?</legend><label><input type="radio" name="q4" value="a">4 × 3</label><label><input type="radio" name="q4" value="b">3 × 4</label><label><input type="radio" name="q4" value="c">3 × 3</label></fieldset><button type="submit">Check answer</button><p class="quiz-feedback" role="status"></p><noscript><p>Answer: 3 × 4; one row per output and one column per input.</p></noscript></form>
+    <details><summary>5. What is the dot product of (1, −2, 3) and (4, 0, −1)?</summary><div class="answer">1×4 + (−2)×0 + 3×(−1) = 4 + 0 − 3 = 1. Both vectors have three entries, so the operation is defined.</div></details>
+    <details><summary>6. Why can five purely linear layers still be represented by one matrix?</summary><div class="answer">The composition is W⁵W⁴W³W²W¹x. The product of these compatible matrices is another matrix, so the result is W x for a single W. A bias would make the combined map affine, but still would not introduce nonlinearity.</div></details>
+  </div><div class="end-links"><a href="#neurons">← Neurons &amp; weights</a><a href="#activations">Next: gates &amp; activations →</a></div></section>
+
+  <section class="lesson" id="activations" aria-labelledby="activations-title"><div class="section-heading"><span class="section-number">03</span><div><p class="section-kicker">The ingredient that makes depth useful</p><h2 id="activations-title">Gates &amp; activation functions</h2><p class="source-ref">Source: <a href="Ch1-A_Mathematical_Perspective.html#s-2">§1</a>, threshold gates, ReLU, SiLU, sigmoid, tanh, and softplus.</p></div></div>
+  <p class="lead">An activation function changes a neuron’s pre-activation before the result travels to the next layer. A nonlinear activation lets a network build functions that cannot always collapse into one affine map.</p>
+  <p>The lecture uses two analogies: signals crossing a synaptic gap, and water accumulating before a drop falls. Both suggest a threshold. An artificial activation is a mathematical rule inspired by this idea; it is not a full biological or physical simulation.</p>
+  <h3>ReLU: keep positive values, suppress the rest</h3>
+  <div class="equation" tabindex="0" role="group" aria-label="ReLU of u equals the maximum of 0 and u: u when u is positive, otherwise zero."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi>ReLU</mi><mrow><mo>(</mo><mi>u</mi><mo>)</mo></mrow></mrow><mo>=</mo><mrow><mi>max</mi><mrow><mo>(</mo><mrow><mn>0</mn><mo>,</mo><mi>u</mi></mrow><mo>)</mo></mrow></mrow><mo>=</mo><mo>{</mo><mtable><mtr><mtd><mi>u</mi></mtd><mtd><mtext>if u &gt; 0</mtext></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mtext>if u ≤ 0</mtext></mtd></mtr></mtable></mrow></math></div>
+  <p>The argument <span class="math">u</span> is any real number. <span class="math">max(0, u)</span> means “choose the larger of 0 and u.” So ReLU(−3) = 0, ReLU(0) = 0, and ReLU(2.5) = 2.5. The name means <strong>rectified linear unit</strong>. The source spells it “ReLu”; this guide uses the standard capitalization “ReLU.”</p>
+  <p>A threshold moves the point where the output becomes positive. For an incoming weighted sum s and threshold θ:</p>
+  <div class="equation" tabindex="0" role="group" aria-label="ReLU with threshold theta equals max of zero and s minus theta."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi>ReLU</mi><mrow><mo>(</mo><mrow><mi>s</mi><mo>−</mo><mi>θ</mi></mrow><mo>)</mo></mrow></mrow><mo>=</mo><mrow><mi>max</mi><mrow><mo>(</mo><mrow><mn>0</mn><mo>,</mo><mi>s</mi><mo>−</mo><mi>θ</mi></mrow><mo>)</mo></mrow></mrow></mrow></math></div>
+  <p>For example, s = 2 and θ = 1 give u = 2 − 1 = 1, so the output is 1. If s = 0.5 with the same threshold, u = −0.5 and the output is 0. At s = θ, the output is exactly 0.</p>
+  <div class="callout warning"><strong>Source inconsistency · Threshold versus additive bias</strong><p>The source first uses ReLU(x − b) for a threshold, then writes the layer rule as ReLU(WX + b). These use opposite signs if the same b is intended. To make the distinction explicit, this guide writes a threshold as <strong>θ</strong> and an additive bias as <strong>b</strong>.</p><div class="equation" tabindex="0" role="group" aria-label="With the additive bias convention, ReLU is positive when the weighted sum is greater than negative b. Additive bias b equals negative threshold theta."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>z</mi><mo>=</mo><mi>s</mi><mo>+</mo><mi>b</mi><mo>,</mo><mrow><mi>ReLU</mi><mrow><mo>(</mo><mi>z</mi><mo>)</mo></mrow></mrow><mo>&gt;</mo><mn>0</mn><mo>⇔</mo><mi>s</mi><mo>&gt;</mo><mo>−</mo><mi>b</mi><mo>;</mo><mi>b</mi><mo>=</mo><mo>−</mo><mi>θ</mi></mrow></math></div><p>Example: a threshold θ = 1 means an additive bias b = −1. A positive additive bias b = 1 instead makes the activation positive as soon as s &gt; −1. Every neural-network calculation and PyTorch example here uses the <strong>+ b</strong> convention.</p></div>
+  <h3>“Pointwise” means one entry at a time</h3>
+  <p>If a layer produces a vector, apply the activation independently to every entry. You do not add the entries or apply a different rule to the whole list.</p>
+  <div class="equation" tabindex="0" role="group" aria-label="Pointwise activation applies the scalar function separately to each vector entry. ReLU of negative 2, 0, 3 is 0, 0, 3."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>σ</mi><mrow><mo>(</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>−2</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow><mo>)</mo></mrow><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mrow><mi>σ</mi><mrow><mo>(</mo><mn>−2</mn><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mi>σ</mi><mrow><mo>(</mo><mn>0</mn><mo>)</mo></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mi>σ</mi><mrow><mo>(</mo><mn>3</mn><mo>)</mo></mrow></mrow></mtd></mtr></mtable><mo>]</mo></mrow><mo>;</mo><mi>ReLU</mi><mrow><mo>(</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>−2</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow><mo>)</mo></mrow><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd></mtr></mtable><mo>]</mo></mrow></mrow></math></div>
+  <p>The same principle holds for a general vector v = (v₁, …, v<sub>N</sub>): σ(v) = (σ(v₁), …, σ(v<sub>N</sub>)). Here N is the number of entries and σ is the chosen scalar activation. This keeps the vector’s shape unchanged.</p>
+  <h3>A hard gate and a soft gate</h3>
+  <p>The source calls ReLU a <strong>hard gate</strong> because it produces an exact zero when u ≤ 0. For a softer transition, it introduces <strong>SiLU</strong>, the sigmoid linear unit.</p>
+  <div class="equation" tabindex="0" role="group" aria-label="Sigmoid of u equals e to the u divided by 1 plus e to the u, or 1 over 1 plus e to the negative u."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi>sigmoid</mi><mrow><mo>(</mo><mi>u</mi><mo>)</mo></mrow></mrow><mo>=</mo><mfrac><msup><mi>e</mi><mi>u</mi></msup><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mi>u</mi></msup></mrow></mfrac><mo>=</mo><mfrac><mn>1</mn><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>u</mi></mrow></msup></mrow></mfrac></mrow></math></div>
+  <div class="equation" tabindex="0" role="group" aria-label="SiLU of u equals u multiplied by sigmoid of u."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi>SiLU</mi><mrow><mo>(</mo><mi>u</mi><mo>)</mo></mrow></mrow><mo>=</mo><mi>u</mi><mrow><mi>sigmoid</mi><mrow><mo>(</mo><mi>u</mi><mo>)</mo></mrow></mrow></mrow></math></div>
+  <p>Sigmoid gives a value strictly between 0 and 1 for any finite u. Multiplying u by that value controls how much of u passes through. With a threshold, use u = s − θ in <em>both</em> factors: SiLU(s − θ) = (s − θ) × sigmoid(s − θ).</p>
+  <div class="callout review"><strong>Prerequisite Review · e and ln</strong><p>The constant e is approximately 2.71828. The expression e<sup>u</sup> is an exponential. The natural logarithm ln reverses it: ln(e<sup>u</sup>) = u. In particular, e⁰ = 1 and ln(1) = 0. The formulas below use those two functions.</p></div>
+  <h3>Worked Example · Compare the gates at u = 1 and u = −1</h3>
+  <ol class="steps"><li><strong>Calculate sigmoid(1).</strong><div class="calc">e¹ ≈ 2.71828<br>sigmoid(1) = 2.71828 / (1 + 2.71828) ≈ 0.73106</div></li><li><strong>Use it inside SiLU.</strong><div class="calc">SiLU(1) = 1 × 0.73106 ≈ 0.73106</div><p>ReLU(1) is 1, so SiLU lets through a smaller positive value here.</p></li><li><strong>Try a negative input.</strong><div class="calc">e⁻¹ ≈ 0.36788<br>sigmoid(−1) = 0.36788 / 1.36788 ≈ 0.26894<br>SiLU(−1) = −1 × 0.26894 ≈ −0.26894</div><p>ReLU(−1) is 0. SiLU can produce a small negative output. It approaches 0 from below as u becomes very negative.</p></li></ol>
+  <p>For large positive u, sigmoid(u) approaches 1, so SiLU(u) is close to u. For very negative u, the product approaches 0. At u = 0, SiLU is exactly 0; near 0 it is generally not zero.</p>
+  <div class="callout tip"><strong>Common Mistake · ReLU is not an on/off output of 0 or 1</strong><p>The gate is either suppressing a value or allowing a positive amount through, but that amount may be 0.1, 2, or 100. ReLU is continuous; its graph has a corner at 0. “Hard gate” here refers to its exact-zero region, not a discontinuous step function.</p></div>
+  <h3>Two more activations in the lecture</h3>
+  <div class="equation" tabindex="0" role="group" aria-label="Tanh of u equals e to the u minus e to the negative u, divided by their sum."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi>tanh</mi><mrow><mo>(</mo><mi>u</mi><mo>)</mo></mrow></mrow><mo>=</mo><mfrac><mrow><msup><mi>e</mi><mi>u</mi></msup><mo>−</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>u</mi></mrow></msup></mrow><mrow><msup><mi>e</mi><mi>u</mi></msup><mo>+</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>u</mi></mrow></msup></mrow></mfrac></mrow></math></div>
+  <p><strong>tanh</strong>, the hyperbolic tangent, gives outputs strictly between −1 and 1 for finite inputs. It is negative for negative u and positive for positive u. At u = 1, the numerator is approximately 2.71828 − 0.36788 = 2.35040. The denominator is 3.08616. The result is about 0.76159. The source’s PyTorch network uses this activation.</p>
+  <div class="equation" tabindex="0" role="group" aria-label="Softplus of u is the natural logarithm of 1 plus e to the u."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi>softplus</mi><mrow><mo>(</mo><mi>u</mi><mo>)</mo></mrow></mrow><mo>=</mo><mrow><mi>ln</mi><mrow><mo>(</mo><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mi>u</mi></msup></mrow><mo>)</mo></mrow></mrow></mrow></math></div>
+  <p><strong>Softplus</strong> is a smooth, always-positive alternative to ReLU. At u = 1, softplus(1) = ln(1 + 2.71828) = ln(3.71828) ≈ 1.31326. At u = 0, it is ln(2) ≈ 0.69315, so it does not share ReLU’s exact-zero region.</p>
+  <div class="table-wrap"><table><caption class="small" style="padding:11px;text-align:left">The same argument u, five different rules · Values rounded to 4 decimal places</caption><thead><tr><th>Activation</th><th>u = −1</th><th>u = 0</th><th>u = 1</th><th>Remember</th></tr></thead><tbody><tr><td>ReLU</td><td>0</td><td>0</td><td>1</td><td>Exact zero for u ≤ 0.</td></tr><tr><td>sigmoid</td><td>0.2689</td><td>0.5</td><td>0.7311</td><td>Output between 0 and 1.</td></tr><tr><td>SiLU</td><td>−0.2689</td><td>0</td><td>0.7311</td><td>u × sigmoid(u); can be negative.</td></tr><tr><td>tanh</td><td>−0.7616</td><td>0</td><td>0.7616</td><td>Output between −1 and 1.</td></tr><tr><td>softplus</td><td>0.3133</td><td>0.6931</td><td>1.3133</td><td>Smooth and strictly positive.</td></tr></tbody></table></div>
+  <div class="lab" id="activation-lab"><div class="lab-header"><div><span class="lab-label">INTERACTIVE LAB</span><h3>Explore an activation</h3></div><span class="lab-number">02 / 07</span></div><div class="lab-body"><p class="lab-intro">Choose a rule and move the signal. Then move the threshold: the graph shifts horizontally. The incoming signal s is the horizontal axis, and u = s − θ is the function’s argument.</p>
+    <div class="controls"><label class="control" for="activation-kind"><span class="control-name">Activation function</span><select id="activation-kind"><option value="relu">ReLU · hard gate</option><option value="silu" selected>SiLU · soft gate</option><option value="sigmoid">sigmoid</option><option value="tanh">tanh</option><option value="softplus">softplus</option></select></label><label class="control" for="activation-signal"><span class="control-name">Incoming signal s <output id="activation-signal-value" for="activation-signal">1</output></span><input type="range" id="activation-signal" min="-6" max="6" step="0.1" value="1"><span class="range-limits"><span>−6</span><span>6</span></span></label><label class="control" for="activation-threshold"><span class="control-name">Threshold θ <output id="activation-threshold-value" for="activation-threshold">0</output></span><input type="range" id="activation-threshold" min="-3" max="3" step="0.1" value="0"><span class="range-limits"><span>−3</span><span>3</span></span></label></div>
+    <svg id="activation-chart" class="chart" viewBox="0 0 720 330" role="img" aria-labelledby="activation-chart-title"><title id="activation-chart-title">Selected activation and its current output</title></svg><div class="legend"><span><i></i><span id="activation-legend">SiLU(s − θ)</span></span><span id="activation-comparison"><i class="comparison"></i>ReLU(s − θ), for comparison</span></div>
+    <div class="readout" id="activation-readout" aria-live="polite" aria-atomic="true">u = 1 − 0 = 1<br>SiLU(1) = 1 × sigmoid(1)<strong class="big-answer">0.73106</strong></div><div class="button-row"><button type="button" id="activation-negative">Try u = −1</button><button type="button" id="activation-reset">Reset explorer</button></div>
+  </div><div class="lab-foot">Added numerical visualization. Plots are sampled smoothly in JavaScript. For sigmoid and tanh, the vertical scale changes to make their output ranges readable; read the axis labels when comparing.</div></div>
+  <p><strong>When are these useful?</strong> They are choices for the nonlinear stage of a network. Their different shapes change how signals pass through. This section introduces them; choosing the best activation for a trained task needs experiments and topics from later sections.</p>
+  <div class="practice"><h3>Check Your Understanding · Activations</h3><p class="practice-intro">Added practice · Pay attention to the sign convention.</p>
+    <details><summary>7. A neuron has weighted sum s = 1 and additive bias b = −2. What is its ReLU output?</summary><div class="answer">z = s + b = 1 − 2 = −1, so ReLU(z) = 0. The equivalent threshold is θ = 2.</div></details>
+    <form class="quiz" data-kind="choice" data-answer="c" data-explanation="SiLU(−1) = −1 × sigmoid(−1), about −0.26894. Sigmoid is positive, so the product keeps the negative sign."><fieldset><legend>8. Which statement about SiLU is correct?</legend><label><input type="radio" name="q8" value="a">It is exactly zero for every negative input.</label><label><input type="radio" name="q8" value="b">Its output is always between 0 and 1.</label><label><input type="radio" name="q8" value="c">It can produce negative values.</label></fieldset><button type="submit">Check answer</button><p class="quiz-feedback" role="status"></p><noscript><p>Answer: it can produce negative values, such as SiLU(−1) ≈ −0.26894.</p></noscript></form>
+    <details><summary>9. Apply ReLU pointwise to (−4, 2, 0, 1.5). Does the vector get shorter?</summary><div class="answer">The result is (0, 2, 0, 1.5). There are still four entries. A pointwise activation changes values, not the vector’s shape.</div></details>
+  </div><div class="end-links"><a href="#layers">← Vectors &amp; layers</a><a href="#network">Next: a complete network →</a></div></section>
+
+  <section class="lesson" id="network" aria-labelledby="network-title"><div class="section-heading"><span class="section-number">04</span><div><p class="section-kicker">Intuition becomes the formal definition</p><h2 id="network-title">Put a network together</h2><p class="source-ref">Source: <a href="Ch1-A_Mathematical_Perspective.html#s-2">§1</a>, affine maps, function composition, the network definition, and architecture.</p></div></div>
+  <h3>Linear and affine are related, but different</h3>
+  <p>A <strong>linear map</strong> has the form L(x) = Wx. It sends the zero vector to zero. An <strong>affine map</strong> adds a translation: Af(x) = Wx + b. In one dimension, it is the familiar line y = ax + b. With a nonzero intercept, that line is affine rather than linear in the strict mathematical sense.</p>
+  <div class="equation" tabindex="0" role="group" aria-label="A linear map is W x. An affine map is W x plus b."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi>L</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>=</mo><mi>W</mi><mi>x</mi><mo>;</mo><mrow><mi>Af</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>=</mo><mi>W</mi><mi>x</mi><mo>+</mo><mi>b</mi></mrow></math></div>
+  <p>Here x has n entries, W has m rows and n columns, and b has m entries. The output has m entries. For example, x = 2, W = 3, and b = 1 give Af(2) = 3×2 + 1 = 7, while L(2) = 6 and Af(0) = 1.</p>
+  <p>The lecture denotes the collection of linear maps by <span class="math">L(ℝⁿ, ℝᵐ)</span> and m × n matrices by <span class="math">M<sub>m×n</sub></span>. With the standard coordinate bases, each such matrix represents exactly one such linear map.</p>
+  <div class="equation" tabindex="0" role="group" aria-label="m by n matrices correspond to linear maps from R n to R m, once the standard bases are fixed."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msub><mi>M</mi><mtext>m×n</mtext></msub><mo>↔</mo><mrow><mi>L</mi><mrow><mo>(</mo><mrow><msup><mi>ℝ</mi><mi>n</mi></msup><mo>,</mo><msup><mi>ℝ</mi><mi>m</mi></msup></mrow><mo>)</mo></mrow></mrow></mrow></math></div>
+  <h3>Read the composition from right to left</h3>
+  <p>The composition symbol <span class="math">∘</span> means “do the function on the right first.” For example, let Af₁(x) = 2x + 1, σ = ReLU, and Af₂(h) = 3h − 2. At x = 1:</p>
+  <div class="calc">Af₁(1) = 2×1 + 1 = 3<br>σ(3) = ReLU(3) = 3<br>Af₂(3) = 3×3 − 2 = 7</div>
+  <p>So (Af₂ ∘ σ ∘ Af₁)(1) = 7. Reversing the order generally changes the result.</p>
+  <div class="callout"><strong>Formal Definition · From the lecturer</strong><p>A neural network is a function built by composing affine maps with nonlinear functions. In the source’s formal convention, a network <span class="math">NN : ℝⁿ → ℝᵐ</span> has L affine layers, with activations between them and a final affine output layer.</p><div class="equation" tabindex="0" role="group" aria-label="A neural network composes affine maps and nonlinear activations, read right to left. The final layer is affine in this definition. The expanded pattern is for L at least 3."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi>NN</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>=</mo><msub><mi>Af</mi><mi>L</mi></msub><mo>∘</mo><msub><mi>σ</mi><mrow><mi>L</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>∘</mo><msub><mi>Af</mi><mrow><mi>L</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>∘</mo><mo>⋯</mo><mo>∘</mo><msub><mi>Af</mi><mn>2</mn></msub><mo>∘</mo><msub><mi>σ</mi><mn>1</mn></msub><mo>∘</mo><msub><mi>Af</mi><mn>1</mn></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow></math></div><p>The displayed general pattern is for L ≥ 3. For two affine layers, the whole expression is simply:</p><div class="equation" tabindex="0" role="group" aria-label="For two affine layers, NN of x is Af two applied to sigma one applied to Af one of x."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi>NN</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>=</mo><mrow><msub><mi>Af</mi><mn>2</mn></msub><mrow><mo>(</mo><mrow><msub><mi>σ</mi><mn>1</mn></msub><mrow><mo>(</mo><mrow><msub><mi>Af</mi><mn>1</mn></msub><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>)</mo></mrow></mrow><mo>)</mo></mrow></mrow></mrow></math></div><p>For L = 1 there is just Af₁(x). Each map is Afᵢ(v) = Wⁱv + bⁱ, from ℝ<sup>kᵢ₋₁</sup> to ℝ<sup>kᵢ</sup>. Set k₀ = n and <span class="math">k<sub>L</sub></span> = m. Each σᵢ acts pointwise on the corresponding hidden vector. The letter v is a temporary name for the input of that particular layer.</p></div>
+  <p>The same definition can be followed as a sequence of layer outputs:</p>
+  <div class="equation" tabindex="0" role="group" aria-label="The hidden layers apply affine maps followed by activation; the final layer is affine."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><msup><mi>X</mi><mrow><mtext>0</mtext></mrow></msup><mo>=</mo><mi>x</mi><mo>;</mo><msup><mi>X</mi><mrow><mtext>i</mtext></mrow></msup><mo>=</mo><mrow><mi>σᵢ</mi><mrow><mo>(</mo><mrow><msup><mi>W</mi><mrow><mtext>i</mtext></mrow></msup><msup><mi>X</mi><mrow><mtext>i−1</mtext></mrow></msup><mo>+</mo><msup><mi>b</mi><mrow><mtext>i</mtext></mrow></msup></mrow><mo>)</mo></mrow></mrow><mtext> for 1 ≤ i &lt; L; </mtext><msup><mi>X</mi><mrow><mtext>L</mtext></mrow></msup><mo>=</mo><msup><mi>W</mi><mrow><mtext>L</mtext></mrow></msup><msup><mi>X</mi><mrow><mtext>L−1</mtext></mrow></msup><mo>+</mo><msup><mi>b</mi><mrow><mtext>L</mtext></mrow></msup></mrow></math></div>
+  <p>In this rule X⁰ is the input x, Xⁱ is a hidden-layer output, and Xᴸ = NN(x) is the final output. Wⁱ has shape kᵢ × kᵢ₋₁; bⁱ and Xⁱ have kᵢ entries. The hidden activations σᵢ keep those kᵢ entries.</p>
+  <div class="callout tip"><strong>Source convention note · The output activation</strong><p>The source first shows a ReLU recurrence for every layer, then gives a formal definition with an affine final layer. These are different output conventions. This guide follows the formal definition and the later PyTorch example: activate hidden layers, then finish with an affine map. A final activation can be added for a particular task, but it is not automatic.</p></div>
+  <h3>Worked Example · A complete 2 → 2 → 1 network</h3>
+  <p>This added example uses two inputs, two hidden neurons with ReLU, and one affine output. Its parameters are:</p>
+  <div class="calc">x = (2, 3)ᵀ<br>W¹ = [[0.5, 2], [1, −1]],  b¹ = (1, 0.5)ᵀ<br>W² = [[1.5, −2]],           b² = −1</div>
+  <ol class="steps"><li><strong>First affine map: compute two pre-activations.</strong><div class="calc">z₁ = 0.5×2 + 2×3 + 1 = 8<br>z₂ = 1×2 − 1×3 + 0.5 = −0.5<br>z = (8, −0.5)ᵀ</div></li><li><strong>Hidden activation: apply ReLU to each entry.</strong><div class="calc">h = ReLU(z) = (8, 0)ᵀ</div><p>The second hidden neuron is suppressed for this input. Its position remains in the vector.</p></li><li><strong>Output affine map: combine the hidden outputs.</strong><div class="calc">y = 1.5×8 + (−2)×0 − 1 = 12 + 0 − 1 = 11</div><p>There is no final ReLU in this example. The output is a raw number, not automatically a probability or a class label.</p></li></ol>
+  <div class="flow" aria-label="A complete worked forward pass"><div class="node">(2, 3)<small>input</small></div><span class="arrow" aria-hidden="true">→</span><div class="node">(8, −0.5)<small>affine map</small></div><span class="arrow" aria-hidden="true">→</span><div class="node">(8, 0)<small>ReLU</small></div><span class="arrow" aria-hidden="true">→</span><div class="node">11<small>affine output</small></div></div>
+  <h3>Architecture describes the arrangement</h3>
+  <p>The <strong>architecture</strong> specifies the layers, their widths, connections, and activation functions. The <strong>parameters</strong> are the numerical weights and biases inside that arrangement. In the example, the architecture is “2 → 2 → 1, hidden ReLU, affine output.” Changing a weight changes the function without changing that architecture.</p>
+  <p>The source colors connections by signed weight. A positive weight and a negative weight have different effects; the magnitude tells you the multiplier’s size. Each receiving neuron also has its own bias, so one layer has a bias <em>vector</em>, not just one shared scalar.</p>
+  <p>Computing outputs with current parameters is a <strong>forward pass</strong>. Training is the separate process of adjusting parameters from data. This selected section builds and evaluates functions. Gradient descent, losses, and the training procedure belong to later source sections.</p>
+  <div class="callout"><strong>Quick Summary · Section 1</strong><p>A neuron combines inputs using weights and a bias. A layer packs these calculations into a matrix operation. Nonlinear activations make compositions more expressive than a stack of affine maps. Architecture describes the arrangement; parameters determine the particular function.</p></div>
+  <div class="practice"><h3>Check Your Understanding · A complete network</h3><p class="practice-intro">Added practice · Use the 2 → 2 → 1 worked example above.</p>
+    <details><summary>10. Is changing the first bias from 1 to 2 an architecture change?</summary><div class="answer">No. It changes a parameter. The number of layers, layer widths, and chosen activation stay the same.</div></details>
+    <form class="quiz" data-kind="number" data-answer="-0.5" data-tolerance="0.0001" data-explanation="At zero input the first affine output is the bias (1, 0.5). ReLU keeps it, then y = 1.5×1 − 2×0.5 − 1 = −0.5."><fieldset><legend>11. For x = (0, 0) in the same worked network, what is the final output?</legend><p class="small">Use both bias vectors; the hidden activation is ReLU.</p><label for="q11-number" class="small" style="border:0;padding:0">Your numerical answer</label><input type="number" id="q11-number" step="any" inputmode="decimal" required><button type="submit">Check answer</button></fieldset><p class="quiz-feedback" role="status"></p><noscript><p>Answer: −0.5. The hidden output is (1, 0.5), so y = 1.5×1 − 2×0.5 − 1 = −0.5.</p></noscript></form>
+    <details><summary>12. The lecturer’s formal network has two affine maps with one tanh in between. How many affine layers is that?</summary><div class="answer">L = 2. The input is layer 0, and tanh is an activation between the affine layers. It is not counted as another affine map. In the common phrase “one hidden layer,” only the hidden layer is counted.</div></details>
+  </div><div class="end-links"><a href="#activations">← Activations</a><a href="#tensors">Next: meet PyTorch →</a></div></section>
+
+  <section class="lesson" id="tensors" aria-labelledby="tensors-title"><div class="section-heading"><span class="section-number">05</span><div><p class="section-kicker">Source subsection 1.1 starts here</p><h2 id="tensors-title">Meet PyTorch tensors</h2><p class="source-ref">Source: <a href="Ch1-A_Mathematical_Perspective.html#s-3">§1.1 — Coding Neural Networks with PyTorch</a>, imports, tensors, arithmetic, plotting, and slicing.</p></div></div>
+  <p class="lead">PyTorch represents numbers in tensors and combines layers using Python objects. A tensor is a numerical array: it may be a single number, a vector, a matrix, or an array with more dimensions.</p>
+  <div class="callout tip"><strong>Before you run the Python</strong><p>The code blocks below are real Python examples. Run them in order in a notebook or Python session with <code>torch</code> and <code>matplotlib</code> installed. The browser labs use equivalent JavaScript calculations; they do not run Python or require PyTorch.</p><p>If those packages are missing in your own Python environment, the basic installation command is <code>python -m pip install torch matplotlib</code>. Package installation needs internet access. This HTML itself has no external fonts, scripts, or other dependencies.</p></div>
+  <h3>Import the tools you need</h3>
+  <div class="code-heading"><span>PYTHON · Imports</span><span>Source §1.1</span></div><pre class="code" tabindex="0"><code class="language-python"><span class="keyword">import</span> torch
+<span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt
+<span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</code></pre>
+  <ul><li><code>import torch</code> makes PyTorch available under the name <code>torch</code>.</li><li><code>import matplotlib.pyplot as plt</code> gives the plotting module a shorter local name, <code>plt</code>.</li><li><code>import torch.nn as nn</code> gives the neural-network module the short name <code>nn</code>. The source introduces this import just before its affine layer; we gather the imports here for convenience.</li></ul>
+  <h3>Start with two small tensors</h3>
+  <div class="code-heading"><span>PYTHON · Elementwise operations</span><span>Source values</span></div><pre class="code" tabindex="0"><code class="language-python">a = torch.tensor([-<span class="number">1</span>, <span class="number">2</span>])
+b = torch.tensor([<span class="number">2</span>, -<span class="number">7</span>])
+
+print(a + b)   <span class="comment"># tensor([ 1, -5])</span>
+print(<span class="number">3</span> * a)   <span class="comment"># tensor([-3,  6])</span>
+print(b ** <span class="number">2</span>)  <span class="comment"># tensor([ 4, 49])</span></code></pre>
+  <p><code>torch.tensor([...])</code> creates a tensor from the numbers in a Python list. The square brackets describe an ordered list. These two tensors both have <strong>shape (2,)</strong>: one dimension, containing two entries. The comma is Python’s way of writing a one-item shape tuple.</p>
+  <p>Matching tensor entries are combined <strong>elementwise</strong>. That is the programming version of “pointwise.”</p>
+  <div class="table-wrap"><table><thead><tr><th>Expression</th><th>Calculation by entry</th><th>Result</th></tr></thead><tbody><tr><td><code>a + b</code></td><td>(−1 + 2, 2 + (−7))</td><td>(1, −5)</td></tr><tr><td><code>3 * a</code></td><td>(3 × (−1), 3 × 2)</td><td>(−3, 6)</td></tr><tr><td><code>b ** 2</code></td><td>(2², (−7)²)</td><td>(4, 49)</td></tr></tbody></table></div>
+  <div class="callout warning"><strong>Common Mistake · Multiplication syntax</strong><p>In Python, <code>**</code> means a power, <code>*</code> means elementwise multiplication for tensors, and <code>@</code> means matrix multiplication when the shapes permit it. Python’s <code>^</code> operator is not exponentiation. The expression <code>a ** 2 - 3 * a</code> means a² − 3a at every entry.</p></div>
+  <div class="lab" id="tensor-lab"><div class="lab-header"><div><span class="lab-label">INTERACTIVE LAB</span><h3>Operate on two tiny tensors</h3></div><span class="lab-number">03 / 07</span></div><div class="lab-body"><p class="lab-intro">The same operation happens at each position. The output keeps shape (2,). Start with the lecturer’s a = (−1, 2) and b = (2, −7).</p><div class="controls"><label class="control" for="tensor-operation"><span class="control-name">Operation</span><select id="tensor-operation"><option value="add">a + b</option><option value="scale">3 * a</option><option value="square">b ** 2</option></select></label><label class="control" for="tensor-a1"><span class="control-name">a[0] <output id="tensor-a1-value" for="tensor-a1">−1</output></span><input type="range" id="tensor-a1" min="-8" max="8" step="1" value="-1"></label><label class="control" for="tensor-a2"><span class="control-name">a[1] <output id="tensor-a2-value" for="tensor-a2">2</output></span><input type="range" id="tensor-a2" min="-8" max="8" step="1" value="2"></label><label class="control" for="tensor-b1"><span class="control-name">b[0] <output id="tensor-b1-value" for="tensor-b1">2</output></span><input type="range" id="tensor-b1" min="-8" max="8" step="1" value="2"></label><label class="control" for="tensor-b2"><span class="control-name">b[1] <output id="tensor-b2-value" for="tensor-b2">−7</output></span><input type="range" id="tensor-b2" min="-8" max="8" step="1" value="-7"></label></div><div class="readout" id="tensor-readout" aria-live="polite" aria-atomic="true">Position 0: −1 + 2 = 1<br>Position 1: 2 + (−7) = −5<strong class="big-answer">[1, −5]</strong></div><div class="button-row"><button type="button" id="tensor-reset">Reset source values</button></div></div><div class="lab-foot">Added learning tool. These examples use two tensors with matching shapes; more general broadcasting rules are beyond the selected lesson.</div></div>
+  <h3>Make a graph from a tensor of inputs</h3>
+  <p>The source uses <code>torch.linspace(-4, 4, 30)</code> to make 30 evenly spaced values, including −4 and 4. The step size is (4 − (−4)) / (30 − 1) = 8 / 29 ≈ 0.27586. There are 29 gaps between 30 points.</p>
+  <div class="code-heading"><span>PYTHON · Plot a² − 3a</span><span>Source §1.1</span></div><pre class="code" tabindex="0"><code class="language-python">a = torch.linspace(-<span class="number">4</span>, <span class="number">4</span>, <span class="number">30</span>)
+plt.plot(a, a ** <span class="number">2</span> - <span class="number">3</span> * a)
+plt.title(<span class="string">&#x27;graph of a^2-3a&#x27;</span>)
+plt.xlabel(<span class="string">&#x27;a&#x27;</span>)
+plt.ylabel(<span class="string">&#x27;a^2-3a&#x27;</span>)
+plt.show()</code></pre>
+  <p><code>plt.plot(a, ...)</code> pairs each input with its computed output. <code>title</code>, <code>xlabel</code>, and <code>ylabel</code> label the picture. The final <code>plt.show()</code> is an added line to display it explicitly in a Python script; some notebooks display it automatically.</p>
+  <p>For example, at a = −2 the result is (−2)² − 3(−2) = 4 + 6 = 10. At a = 2 it is 4 − 6 = −2. Squaring a whole tensor produces all the plotted values at once.</p>
+  <div class="lab" id="polynomial-lab"><div class="lab-header"><div><span class="lab-label">INTERACTIVE LAB</span><h3>See what linspace samples</h3></div><span class="lab-number">04 / 07</span></div><div class="lab-body"><p class="lab-intro">Change the number of samples. The formula stays a² − 3a; the line segments connect the selected sample points. Use the second slider to evaluate the formula at one input.</p><div class="controls"><label class="control" for="poly-count"><span class="control-name">Number of points <output id="poly-count-value" for="poly-count">30</output></span><input type="range" id="poly-count" min="5" max="60" step="1" value="30"><span class="range-limits"><span>5</span><span>60</span></span></label><label class="control" for="poly-input"><span class="control-name">Evaluate at a <output id="poly-input-value" for="poly-input">2</output></span><input type="range" id="poly-input" min="-4" max="4" step="0.1" value="2"><span class="range-limits"><span>−4</span><span>4</span></span></label></div><svg id="polynomial-chart" class="chart" viewBox="0 0 720 330" role="img" aria-labelledby="polynomial-chart-title"><title id="polynomial-chart-title">Sampled plot of a squared minus 3a</title></svg><div class="readout" id="polynomial-readout" aria-live="polite" aria-atomic="true">30 samples, with gap 8 / 29 ≈ 0.27586<br>At a = 2: 2² − 3×2 = −2</div><div class="button-row"><button type="button" id="poly-reset">Reset source example</button></div></div><div class="lab-foot">The highlighted evaluation point is computed independently and need not be one of the linspace samples. An unbroken curve is approximated by the plotted line segments.</div></div>
+  <h3>Select a row or column: slicing</h3>
+  <p>A shape (2, 3) tensor has two rows and three columns. The source creates one with <code>torch.rand(2, 3)</code>. Its entries are sampled between 0 inclusive and 1 exclusive, so your numbers will normally differ from the printed sample.</p>
+  <div class="code-heading"><span>PYTHON · Row and column slices</span><span>Source §1.1</span></div><pre class="code" tabindex="0"><code class="language-python">x = torch.rand(<span class="number">2</span>, <span class="number">3</span>)
+x1 = x[<span class="number">1</span>, :]  <span class="comment"># second row: keep every column</span>
+y1 = x[:, <span class="number">2</span>]  <span class="comment"># third column: keep every row</span>
+
+print(f&#x27;x= {x}&#x27;)
+print(f&#x27;x1={x1}&#x27;)
+print(f&#x27;y1={y1}&#x27;)</code></pre>
+  <div class="table-wrap"><table><thead><tr><th>Expression</th><th>Interpretation</th><th>Output shape</th></tr></thead><tbody><tr><td><code>x[1, :]</code></td><td>Row index 1, every column: the second row.</td><td>(3,)</td></tr><tr><td><code>x[:, 2]</code></td><td>Every row, column index 2: the third column.</td><td>(2,)</td></tr></tbody></table></div>
+  <p>Python indices start at <strong>0</strong>. The colon <code>:</code> means “take every position along this dimension.” An integer index removes that dimension from the result, so both slices above are one-dimensional tensors. <code>f'...{x}...'</code> is an f-string: Python inserts the current value of x inside the printed text.</p>
+  <div class="callout tip"><strong>Source clarification · Tensor, not Python list</strong><p>The source informally calls these slices “lists of numbers.” They are PyTorch <strong>tensors</strong>. Neither a shape (3,) tensor nor a shape (2,) tensor is automatically a two-dimensional row or column matrix. Also, the mathematical entry x₂₃ corresponds to Python’s <code>x[1, 2]</code>: mathematical indices in the displayed matrix start at 1, while Python starts at 0.</p></div>
+  <div class="lab" id="slicing-lab"><div class="lab-header"><div><span class="lab-label">INTERACTIVE LAB</span><h3>Pick entries from a tensor</h3></div><span class="lab-number">05 / 07</span></div><div class="lab-body"><p class="lab-intro">The initial values reproduce the source’s displayed sample. Green marks the chosen row, blue marks the chosen column, and the bordered cell belongs to both.</p><div class="controls"><label class="control" for="slice-row"><span class="control-name">Row index</span><select id="slice-row"><option value="0">0 · first row</option><option value="1" selected>1 · second row</option></select></label><label class="control" for="slice-col"><span class="control-name">Column index</span><select id="slice-col"><option value="0">0 · first column</option><option value="1">1 · second column</option><option value="2" selected>2 · third column</option></select></label></div><div class="table-wrap"><table id="slice-grid" class="matrix-table" aria-label="A two by three tensor, with selected row and column"></table></div><div class="readout" id="slice-readout" aria-live="polite" aria-atomic="true">x[1, :] → [0.9940, 0.0890, 0.3960], shape (3,)<br>x[:, 2] → [0.6339, 0.3960], shape (2,)</div><div class="button-row"><button type="button" id="slice-new">New illustrative values</button><button type="button" id="slice-reset">Reset source sample</button></div></div><div class="lab-foot">The source’s printed values are one example, not the unique output of torch.rand. New values here come from the browser’s illustrative generator, not PyTorch’s random-number generator.</div></div>
+  <div class="practice"><h3>Check Your Understanding · Tensors</h3><p class="practice-intro">Added practice · Try translating between mathematical and Python notation.</p>
+    <details><summary>13. For a = (−1, 2) and b = (2, −7), why is b ** 2 equal to (4, 49), not (4, −49)?</summary><div class="answer">Each whole signed entry is squared. The second entry is (−7)² = (−7) × (−7) = 49. The expression −7² without parentheses in written arithmetic can mean −(7²), which is different.</div></details>
+    <form class="quiz" data-kind="choice" data-answer="a" data-explanation="x[:, 2] keeps the third column and removes the column dimension. Two rows contribute one number each, so the output is a tensor of shape (2,)."><fieldset><legend>14. With x.shape = (2, 3), what is the shape of x[:, 2]?</legend><label><input type="radio" name="q14" value="a">(2,)</label><label><input type="radio" name="q14" value="b">(3,)</label><label><input type="radio" name="q14" value="c">(2, 1)</label></fieldset><button type="submit">Check answer</button><p class="quiz-feedback" role="status"></p><noscript><p>Answer: (2,), because the result contains one value from each of two rows.</p></noscript></form>
+    <details><summary>15. What are the first and last entries of torch.linspace(−4, 4, 30)? What is the gap?</summary><div class="answer">The first is −4 and the last is 4. The 30 entries have 29 equal gaps, each 8 / 29 ≈ 0.27586.</div></details>
+  </div><div class="end-links"><a href="#network">← The network definition</a><a href="#pytorch">Next: affine layers &amp; batches →</a></div></section>
+
+  <section class="lesson" id="pytorch" aria-labelledby="pytorch-title"><div class="section-heading"><span class="section-number">06</span><div><p class="section-kicker">Translate Wx + b into code</p><h2 id="pytorch-title">Affine layers &amp; batches</h2><p class="source-ref">Source: <a href="Ch1-A_Mathematical_Perspective.html#s-3">§1.1</a>, nn.Linear, stored parameters, batches, and objects.</p></div></div>
+  <p class="lead"><code>nn.Linear(n, m)</code> creates an affine layer that turns n input features into m output features. The layer stores a weight matrix and, by default, a bias vector.</p>
+  <div class="code-heading"><span>PYTHON · Inspect a layer</span><span>Source operation, with shape prints added</span></div><pre class="code" tabindex="0"><code class="language-python">L = nn.Linear(<span class="number">2</span>, <span class="number">3</span>)
+W = L.weight
+b = L.bias
+
+print(W)        <span class="comment"># Parameter: a 3 by 2 tensor</span>
+print(b)        <span class="comment"># Parameter: a 3-entry tensor</span>
+print(W.shape)  <span class="comment"># torch.Size([3, 2])</span>
+print(b.shape)  <span class="comment"># torch.Size([3])</span>
+
+without_bias = nn.Linear(<span class="number">2</span>, <span class="number">3</span>, bias=<span class="keyword">False</span>)</code></pre>
+  <p>With <code>nn.Linear(2, 3)</code>, the weight W has shape (3, 2) and b has shape (3,). Initial parameter values are sampled by PyTorch, so you should not expect the exact random numbers printed in the lecture. With <code>bias=False</code>, the layer has no bias parameter; its bias attribute is <code>None</code> and the mathematical map is Wx.</p>
+  <div class="callout warning"><strong>Terminology note · A “Linear” layer is usually affine</strong><p>The source correctly gives L(x) = Wx + b but later calls this a linear map. With nonzero bias it is <strong>affine</strong> in the mathematical sense. PyTorch’s class name <code>nn.Linear</code> uses the conventional machine-learning name. A layer has no activation unless you apply one separately.</p></div>
+  <h3>Use known numbers before random parameters</h3>
+  <p>For a reproducible arithmetic example, explicitly set the weights and bias. These are added teaching values; they are not the source’s random initialization.</p>
+  <div class="code-heading"><span>PYTHON · A fully checkable forward pass</span><span>Extra worked example</span></div><pre class="code" tabindex="0"><code class="language-python"><span class="comment"># Extra worked example: choose known parameters.</span>
+L = nn.Linear(<span class="number">2</span>, <span class="number">3</span>)
+<span class="keyword">with</span> torch.no_grad():
+    L.weight.copy_(torch.tensor([
+        [<span class="number">0.5</span>, <span class="number">2.0</span>],
+        [<span class="number">1.0</span>, -<span class="number">1.0</span>],
+        [-<span class="number">1.0</span>, <span class="number">0.5</span>],
+    ]))
+    L.bias.copy_(torch.tensor([<span class="number">1.0</span>, <span class="number">0.5</span>, <span class="number">0.0</span>]))
+
+batch = torch.tensor([[<span class="number">2.0</span>, <span class="number">3.0</span>], [<span class="number">0.0</span>, <span class="number">1.0</span>]])
+<span class="keyword">with</span> torch.no_grad():
+    result = L(batch)
+print(result)
+<span class="comment"># tensor([[ 8.0000, -0.5000, -0.5000],</span>
+<span class="comment">#         [ 3.0000, -0.5000,  0.5000]])</span></code></pre>
+  <p><code>copy_</code> copies the values into the existing parameter; the underscore marks an in-place operation. The <code>torch.no_grad()</code> context is appropriate here because we are assigning parameters and evaluating, not constructing a training computation. The input uses decimal numbers so it has a floating-point type compatible with the layer’s default parameters.</p>
+  <ol class="steps"><li><strong>First input vector: (2, 3).</strong><div class="calc">First output: 0.5×2 + 2×3 + 1 = 8<br>Second output: 1×2 − 1×3 + 0.5 = −0.5<br>Third output: −1×2 + 0.5×3 + 0 = −0.5</div></li><li><strong>Second input vector: (0, 1).</strong><div class="calc">First output: 0.5×0 + 2×1 + 1 = 3<br>Second output: 1×0 − 1×1 + 0.5 = −0.5<br>Third output: −1×0 + 0.5×1 + 0 = 0.5</div></li></ol>
+  <h3>A batch is several inputs processed with the same layer</h3>
+  <p>A batch groups multiple examples so they can use the same parameters efficiently. If a batch has k examples and each has n features, its shape is (k, n). An <code>nn.Linear(n, m)</code> layer produces shape (k, m): one m-entry output for each example.</p>
+  <p>The mathematics above uses column vectors, Wx + b. PyTorch commonly stores batch examples as <em>rows</em>. Give the batch matrix a different capital letter, B, to avoid confusing it with the bias b:</p>
+  <div class="equation" tabindex="0" role="group" aria-label="For a row-oriented batch B, output Y is B times W transpose plus the bias on every row. B is k by n, W is m by n, and Y is k by m."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mi>Y</mi><mo>=</mo><mi>B</mi><msup><mi>W</mi><mi>T</mi></msup><mo>+</mo><mi>b</mi><mo>,</mo><mi>B</mi><mo>∈</mo><msup><mi>ℝ</mi><mtext>k×n</mtext></msup><mo>,</mo><mi>W</mi><mo>∈</mo><msup><mi>ℝ</mi><mtext>m×n</mtext></msup><mo>,</mo><mi>Y</mi><mo>∈</mo><msup><mi>ℝ</mi><mtext>k×m</mtext></msup></mrow></math></div>
+  <p>W still has m rows and n columns. Its transpose Wᵀ has n rows and m columns, so the product (k × n)(n × m) has shape k × m. Adding b means adding its m entries to <em>each</em> output row. The same weights and bias are reused; batching does not create a different layer per example.</p>
+  <div class="callout tip"><strong>Source clarification · A batch is common, not mandatory</strong><p>The source emphasizes a two-dimensional input <code>[batch_size, input_dim]</code>. A single vector of shape <code>(n,)</code> is also valid and gives <code>(m,)</code>. More generally, <code>nn.Linear</code> transforms the final dimension and preserves leading dimensions. The last input dimension must equal n.</p></div>
+  <div class="lab" id="batch-lab"><div class="lab-header"><div><span class="lab-label">INTERACTIVE LAB</span><h3>Check the shapes, then calculate</h3></div><span class="lab-number">06 / 07</span></div><div class="lab-body"><p class="lab-intro">The initial setting reproduces the fixed Python example above. Change a dimension and see a compatible batch, weight matrix, bias, and output. Every output is an actual row dot product plus a bias.</p><div class="controls"><label class="control" for="batch-inputs"><span class="control-name">Inputs per example n <output id="batch-inputs-value" for="batch-inputs">2</output></span><input type="range" id="batch-inputs" min="1" max="4" step="1" value="2"></label><label class="control" for="batch-outputs"><span class="control-name">Outputs per example m <output id="batch-outputs-value" for="batch-outputs">3</output></span><input type="range" id="batch-outputs" min="1" max="4" step="1" value="3"></label><label class="control" for="batch-size"><span class="control-name">Examples in batch k <output id="batch-size-value" for="batch-size">2</output></span><input type="range" id="batch-size" min="1" max="4" step="1" value="2"></label></div>
+    <div class="flow" id="batch-shape-flow" aria-live="polite"><div class="node">B: (2, 2)<small>two examples</small></div><span class="arrow" aria-hidden="true">→</span><div class="node">Linear(2, 3)<small>W: (3, 2), b: (3,)</small></div><span class="arrow" aria-hidden="true">→</span><div class="node">Y: (2, 3)<small>two output rows</small></div></div>
+    <div class="matrices"><div><p class="matrix-title" id="batch-b-label">B · input examples</p><div class="table-wrap"><table id="batch-b-table" class="matrix-table" aria-labelledby="batch-b-label"></table></div></div><div><p class="matrix-title" id="batch-w-label">W · output rows × input columns</p><div class="table-wrap"><table id="batch-w-table" class="matrix-table" aria-labelledby="batch-w-label"></table></div><div class="inline-result" id="batch-bias">b = [1, 0.5, 0]</div></div><div class="matrix-output"><p class="matrix-title" id="batch-y-label">Y · B @ W.T + b</p><div class="table-wrap"><table id="batch-y-table" class="matrix-table" aria-labelledby="batch-y-label"></table></div></div></div>
+    <div class="readout" id="batch-readout" aria-live="polite" aria-atomic="true">First output, first example: (2 × 0.5) + (3 × 2) + 1 = 8</div><div class="button-row"><button type="button" id="batch-reset">Reset worked example</button></div>
+  </div><div class="lab-foot">Added shape explorer. Dimensions range from 1 to 4 for readability. Changing a dimension adds or removes entries from a fixed illustrative parameter table; it does not train a network.</div></div>
+  <h3>Objects store both data and behavior</h3>
+  <p>In object-oriented programming, an <strong>object</strong> combines stored data, called attributes, with operations, called methods. Here <code>L</code> is an object. <code>L.weight</code> and <code>L.bias</code> are attributes. Calling <code>L(batch)</code> evaluates the layer.</p>
+  <p>The parameters are PyTorch <code>Parameter</code> objects, a special kind of tensor. <code>requires_grad=True</code> means PyTorch can record operations needed to compute derivatives. A derivative describes sensitivity to change; the training method that uses it is taught later.</p>
+  <div class="code-heading"><span>PYTHON · Inspect gradient-related attributes</span><span>Extra explanation of source wording</span></div><pre class="code" tabindex="0"><code class="language-python">L = nn.Linear(<span class="number">2</span>, <span class="number">3</span>)
+print(L.weight.requires_grad)  <span class="comment"># True</span>
+print(L.weight.grad)           <span class="comment"># None: no backward pass yet</span>
+print(L.bias.grad)             <span class="comment"># None</span></code></pre>
+  <div class="callout tip"><strong>Source clarification · Parameters are not literal pairs</strong><p>The lecture describes a weight as a “(weight, gradient)” pair to convey that derivative information can be associated with it. It is a parameter tensor with a <code>.grad</code> attribute, not a Python tuple. For a fresh layer, <code>.grad</code> is normally <code>None</code> until a backward computation produces gradients. Randomly initialized values also do not mean the layer has been trained.</p></div>
+  <div class="callout warning"><strong>Common Mistakes · Three quick checks</strong><p>Check the final input dimension, use floating-point inputs compatible with the layer, and remember that <code>nn.Linear</code> does not apply ReLU or tanh. A shape error, a data-type error, and a missing activation are different problems.</p></div>
+  <div class="practice"><h3>Check Your Understanding · Affine layers</h3><p class="practice-intro">Added practice · Connect the layer object to its equation.</p>
+    <details><summary>16. A batch has shape (5, 2) and L = nn.Linear(2, 3). What are W.shape, b.shape, and L(batch).shape?</summary><div class="answer">W.shape is (3, 2), b.shape is (3,), and the output shape is (5, 3). The five examples share the same weights and bias.</div></details>
+    <form class="quiz" data-kind="choice" data-answer="b" data-explanation="Batch examples are rows, so multiply B (k×n) by W.T (n×m), then add the m-entry bias to every output row."><fieldset><legend>17. Which formula matches a row-oriented PyTorch batch?</legend><label><input type="radio" name="q17" value="a">Y = W B + b for all batch shapes</label><label><input type="radio" name="q17" value="b">Y = B Wᵀ + b, with b added to every row</label><label><input type="radio" name="q17" value="c">Y = ReLU(B), without using W</label></fieldset><button type="submit">Check answer</button><p class="quiz-feedback" role="status"></p><noscript><p>Answer: Y = B Wᵀ + b, adding the same bias to every output row.</p></noscript></form>
+    <details><summary>18. Does requires_grad=True mean the gradient is already stored, and the network is trained?</summary><div class="answer">Neither follows. It allows derivative tracking when gradient recording is enabled. A fresh parameter’s .grad is normally None, and training needs data plus a procedure to update parameters. The flag alone changes no weights.</div></details>
+  </div><div class="end-links"><a href="#tensors">← Tensors &amp; slicing</a><a href="#build">Next: build the source network →</a></div></section>
+
+  <section class="lesson" id="build" aria-labelledby="build-title"><div class="section-heading"><span class="section-number">07</span><div><p class="section-kicker">From the definition to a Python class</p><h2 id="build-title">Build the source network</h2><p class="source-ref">Source: <a href="Ch1-A_Mathematical_Perspective.html#s-3">§1.1</a>, NeuralNet, a 1 → 20 → 1 network, and its plotted forward pass.</p></div></div>
+  <p class="lead">The lecturer’s final example has one input, twenty hidden neurons with tanh, and one affine output. It is a function from ℝ to ℝ.</p>
+  <div class="equation" tabindex="0" role="group" aria-label="The source network is W two times tanh of W one x plus b one, plus b two."><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><mrow><mrow><mi>N</mi><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>=</mo><msup><mi>W</mi><mrow><mtext>2</mtext></mrow></msup><mrow><mi>tanh</mi><mrow><mo>(</mo><mrow><msup><mi>W</mi><mrow><mtext>1</mtext></mrow></msup><mi>x</mi><mo>+</mo><msup><mi>b</mi><mrow><mtext>1</mtext></mrow></msup></mrow><mo>)</mo></mrow></mrow><mo>+</mo><msup><mi>b</mi><mrow><mtext>2</mtext></mrow></msup></mrow></math></div>
+  <p>W¹ has shape (20, 1), b¹ has 20 entries, W² has shape (1, 20), and b² has one entry. The scalar input expands to 20 hidden values, tanh acts on all 20, and the final affine map combines them into one output.</p>
+  <div class="flow" aria-label="The architecture of the source network"><div class="node">1 input<small>x ∈ ℝ</small></div><span class="arrow" aria-hidden="true">→</span><div class="node">20 hidden values<small>Af₁, then tanh</small></div><span class="arrow" aria-hidden="true">→</span><div class="node">1 output<small>Af₂, no final activation</small></div></div>
+  <div class="code-heading"><span>PYTHON · The lecturer’s network</span><span>Spacing and comments simplified</span></div><pre class="code" tabindex="0"><code class="language-python"><span class="keyword">class</span> NeuralNet(nn.Module):
+    <span class="keyword">def</span> __init__(self):
+        super().__init__()
+        self.A1 = nn.Linear(<span class="number">1</span>, <span class="number">20</span>)
+        self.A2 = nn.Linear(<span class="number">20</span>, <span class="number">1</span>)
+
+    <span class="keyword">def</span> forward(self, x):
+        y = self.A1(x)
+        y = torch.tanh(y)
+        y = self.A2(y)
+        <span class="keyword">return</span> y
+
+N = NeuralNet()</code></pre>
+  <div class="code-steps"><span class="step-index">01</span><div><h4 style="margin-top:0">Declare a kind of module</h4><p><code>class NeuralNet(nn.Module)</code> defines a new class called NeuralNet, based on PyTorch’s <code>nn.Module</code>. A class is a recipe for objects; <code>N = NeuralNet()</code> creates one instance. Uppercase N is the particular network object.</p></div><span class="step-index">02</span><div><h4 style="margin-top:0">Create its stored layers</h4><p><code>def __init__(self)</code> defines the initialization method. <code>self</code> refers to the object being created. <code>super().__init__()</code> initializes the parent module, allowing PyTorch to manage its submodules and parameters. Assigning layers to <code>self.A1</code> and <code>self.A2</code> stores and registers them.</p></div><span class="step-index">03</span><div><h4 style="margin-top:0">Describe the forward calculation</h4><p><code>def forward(self, x)</code> describes how an input moves through the stored layers. First calculate <code>A1(x)</code>, apply <code>torch.tanh</code> elementwise, and then calculate <code>A2(y)</code>. <code>return y</code> sends the result back. Calling <code>N(x)</code> runs this forward calculation through the module interface.</p></div></div>
+  <p>Python indentation is part of the syntax: the two methods belong inside the class, and their bodies are indented again. Naming an attribute <code>A1</code> does not itself compose functions; the order inside <code>forward</code> determines the calculation.</p>
+  <h3>Plot the function it currently represents</h3>
+  <div class="code-heading"><span>PYTHON · Evaluate a batch of 300 points</span><span>Source §1.1</span></div><pre class="code" tabindex="0"><code class="language-python">x = torch.linspace(-<span class="number">20</span>, <span class="number">20</span>, <span class="number">300</span>)
+<span class="keyword">with</span> torch.no_grad():
+    y = N(x.view(-<span class="number">1</span>, <span class="number">1</span>))
+
+plt.figure(figsize=(<span class="number">10</span>, <span class="number">5</span>))
+plt.plot(x, y)
+plt.show()</code></pre>
+  <ol class="steps"><li><strong>Make 300 scalar inputs.</strong><p><code>torch.linspace(-20, 20, 300)</code> returns shape (300,), including both endpoints.</p></li><li><strong>Arrange them as 300 examples with one feature each.</strong><p><code>x.view(-1, 1)</code> reshapes the values to (300, 1). The −1 asks PyTorch to infer that first size from the number of elements; it is not an index selecting the last element. The reshaping preserves the numbers.</p></li><li><strong>Pass the batch through the model.</strong><div class="calc">(300, 1) → A1 → (300, 20) → tanh → (300, 20) → A2 → (300, 1)</div></li><li><strong>Draw the 300 input/output pairs.</strong><p><code>torch.no_grad()</code> disables recording for automatic differentiation in this block. It does not change the weights or train the network. <code>figsize=(10, 5)</code> sets the plot’s dimensions in inches. <code>plt.show()</code> displays it.</p></li></ol>
+  <div class="callout warning"><strong>Common Mistake · A curve is not evidence of learning</strong><p>A newly constructed network already defines a function, so you can plot it immediately. Its parameters are initialized values. It has not fitted any target data. The source postpones training until after stochastic gradient descent; this guide keeps that same boundary.</p></div>
+  <div class="lab" id="network-lab"><div class="lab-header"><div><span class="lab-label">INTERACTIVE LAB</span><h3>Look inside a 1 → 20 → 1 network</h3></div><span class="lab-number">07 / 07</span></div><div class="lab-body"><p class="lab-intro">Explore the same architecture as the Python class. Move x to inspect one forward pass. New weights change the represented function; changing the final bias shifts the whole curve vertically. No training occurs.</p><div class="controls"><label class="control" for="net-input"><span class="control-name">Input x <output id="net-input-value" for="net-input">2</output></span><input type="range" id="net-input" min="-20" max="20" step="0.25" value="2"><span class="range-limits"><span>−20</span><span>20</span></span></label><label class="control" for="net-bias"><span class="control-name">Output bias b² <output id="net-bias-value" for="net-bias">0</output></span><input type="range" id="net-bias" min="-1" max="1" step="0.05" value="0"><span class="range-limits"><span>−1</span><span>1</span></span></label><label class="control" for="net-unit"><span class="control-name">Inspect hidden neuron <output id="net-unit-value" for="net-unit">1</output></span><input type="range" id="net-unit" min="1" max="20" step="1" value="1"><span class="range-limits"><span>1</span><span>20</span></span></label></div>
+    <svg id="network-chart" class="chart" viewBox="0 0 720 330" role="img" aria-labelledby="network-chart-title"><title id="network-chart-title">Output of an untrained 1 to 20 to 1 tanh network across 300 input points</title></svg><div class="legend"><span><i></i>Current N(x), sampled at 300 points</span><span>● Highlighted input</span></div><p class="small muted" style="margin-bottom:5px">The 20 hidden activations at this x · green above the center = positive; brown below = negative</p><div class="hidden-bars" id="hidden-bars" role="img" aria-label="Twenty hidden tanh activations"></div>
+    <div class="value-grid"><div class="value-box"><small>Selected input weight w¹</small><output id="net-w1">—</output></div><div class="value-box"><small>Selected hidden bias b¹</small><output id="net-b1">—</output></div><div class="value-box"><small>Selected output weight w²</small><output id="net-w2">—</output></div></div><div class="readout" id="network-readout" aria-live="polite" aria-atomic="true">Initializing the illustrative forward pass…</div>
+    <div class="button-row"><button type="button" id="net-new">New weights &amp; hidden biases</button><button type="button" id="net-reset">Reset network example</button></div>
+  </div><div class="lab-foot">Added JavaScript model: the architecture and equations match the source. Illustrative parameters come from a repeatable browser generator, so this curve does not reproduce PyTorch’s random initialization. The output bias starts at 0 and is controlled separately.</div></div>
+  <h3>Extra Explanation · Count the parameters</h3>
+  <p>The architecture contains 61 scalar parameters. A batch size does not change this count because every example shares those parameters.</p>
+  <div class="calc">A1: 20×1 weights + 20 biases = 40<br>A2: 1×20 weights + 1 bias = 21<br>Total = 40 + 21 = 61</div>
+  <h3>A complete script to try yourself</h3>
+  <p>This gathers the source’s class and plotting steps into one runnable script. A fixed random seed and shape prints are added so you can inspect the result. A seed helps repeat the initialization in the same PyTorch environment; the HTML lab uses a separate generator.</p>
+  <details><summary style="cursor:pointer;font-weight:650;min-height:48px;padding:10px 0">Open the complete Python script</summary><div class="code-heading"><span>PYTHON · Standalone source-architecture example</span><span>Requires torch and matplotlib</span></div><pre class="code" tabindex="0"><code class="language-python"><span class="keyword">import</span> torch
+<span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn
+<span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt
+
+<span class="comment"># Added for repeatable results in the same PyTorch environment.</span>
+torch.manual_seed(<span class="number">7</span>)
+
+<span class="keyword">class</span> NeuralNet(nn.Module):
+    <span class="keyword">def</span> __init__(self):
+        super().__init__()
+        self.A1 = nn.Linear(<span class="number">1</span>, <span class="number">20</span>)
+        self.A2 = nn.Linear(<span class="number">20</span>, <span class="number">1</span>)
+
+    <span class="keyword">def</span> forward(self, x):
+        y = self.A1(x)
+        y = torch.tanh(y)
+        <span class="keyword">return</span> self.A2(y)
+
+N = NeuralNet()
+x = torch.linspace(-<span class="number">20</span>, <span class="number">20</span>, <span class="number">300</span>)
+<span class="keyword">with</span> torch.no_grad():
+    y = N(x.view(-<span class="number">1</span>, <span class="number">1</span>))
+
+print(<span class="string">&#x27;input:&#x27;</span>, x.view(-<span class="number">1</span>, <span class="number">1</span>).shape)  <span class="comment"># [300, 1]</span>
+print(<span class="string">&#x27;output:&#x27;</span>, y.shape)            <span class="comment"># [300, 1]</span>
+print(<span class="string">&#x27;parameters:&#x27;</span>, sum(p.numel() <span class="keyword">for</span> p <span class="keyword">in</span> N.parameters()))  <span class="comment"># 61</span>
+
+plt.figure(figsize=(<span class="number">10</span>, <span class="number">5</span>))
+plt.plot(x, y, label=<span class="string">&#x27;Untrained network&#x27;</span>)
+plt.xlabel(<span class="string">&#x27;x&#x27;</span>)
+plt.ylabel(<span class="string">&#x27;N(x)&#x27;</span>)
+plt.legend()
+plt.tight_layout()
+plt.show()</code></pre></details>
+  <div class="callout"><strong>Quick Summary · Section 1.1</strong><p>Tensors hold the numbers. <code>nn.Linear</code> stores an affine map. Batches reuse it for many inputs. A module’s <code>forward</code> method composes the layers and activations. The source network maps one number to one number through twenty hidden tanh units, using 61 parameters.</p></div>
+  <div class="practice"><h3>Check Your Understanding · Build the network</h3><p class="practice-intro">Added practice · Finish by explaining the code in your own words.</p>
+    <details><summary>19. Why does the source reshape 300 inputs with x.view(−1, 1)?</summary><div class="answer">The first layer expects one feature per example. The reshape makes 300 examples of one feature each, shape (300, 1). A shape (300,) input would instead present 300 features in its final dimension, which does not match nn.Linear(1, 20).</div></details>
+    <form class="quiz" data-kind="number" data-answer="61" data-tolerance="0" data-explanation="A1 has 20×1 + 20 = 40 parameters. A2 has 1×20 + 1 = 21. The total is 61; tanh has no parameters here."><fieldset><legend>20. How many scalar parameters does this 1 → 20 → 1 network have, including biases?</legend><label for="q20-number" class="small" style="border:0;padding:0">Your numerical answer</label><input type="number" id="q20-number" step="1" min="0" required inputmode="numeric"><button type="submit">Check answer</button></fieldset><p class="quiz-feedback" role="status"></p><noscript><p>Answer: 61 = (20×1 + 20) + (1×20 + 1).</p></noscript></form>
+    <details><summary>21. You plot N(x) immediately after N = NeuralNet(). What has the network learned?</summary><div class="answer">Nothing has been fitted yet. The plot shows the function defined by the initialized weights and biases. Neither plotting nor torch.no_grad() trains it.</div></details>
+  </div><div class="end-links"><a href="#pytorch">← Affine layers &amp; batches</a><a href="#reference">Next: glossary &amp; source notes →</a></div></section>
+
+  <section class="lesson" id="reference" aria-labelledby="reference-title"><div class="section-heading"><span class="section-number">∑</span><div><p class="section-kicker">Keep this page beside your exercises</p><h2 id="reference-title">Glossary &amp; source notes</h2><p class="source-ref">Reference for the selected <a href="Ch1-A_Mathematical_Perspective.html#s-2">§1</a> and <a href="Ch1-A_Mathematical_Perspective.html#s-3">§1.1</a>.</p></div></div>
+  <dl class="glossary">
+  <div><dt>Activation function</dt><dd>A usually nonlinear rule applied after an affine map; here it acts on each entry separately.</dd></div>
+  <div><dt>Affine map</dt><dd>A function Wx + b. The matrix transforms an input and the bias adds an offset.</dd></div>
+  <div><dt>Architecture</dt><dd>The network’s arrangement: layers, widths, connections, and activation choices.</dd></div>
+  <div><dt>Batch</dt><dd>Several examples grouped for calculation with shared parameters.</dd></div>
+  <div><dt>Bias</dt><dd>An additive parameter. A layer has one bias per output neuron when bias is enabled.</dd></div>
+  <div><dt>Composition</dt><dd>Applying functions in sequence. In f ∘ g, calculate g first, then f.</dd></div>
+  <div><dt>Dot product</dt><dd>Multiply matching entries of two equal-length vectors and add the products.</dd></div>
+  <div><dt>Feature</dt><dd>One numerical input component describing an example.</dd></div>
+  <div><dt>Forward pass</dt><dd>Computing the network’s output using its current weights and biases.</dd></div>
+  <div><dt>Gradient</dt><dd>Derivatives describing how a quantity changes with its parameters. Training is outside this selection.</dd></div>
+  <div><dt>Hidden layer</dt><dd>An internal layer between the raw input and final output.</dd></div>
+  <div><dt>Linear map</dt><dd>A function Wx, without an additive translation. It sends zero to zero.</dd></div>
+  <div><dt>Matrix</dt><dd>A rectangular table of numbers. An m × n matrix has m rows and n columns.</dd></div>
+  <div><dt>Module</dt><dd>A PyTorch object that can hold parameters, submodules, and a forward calculation.</dd></div>
+  <div><dt>Neuron</dt><dd>A small calculation that combines incoming values using its weights and usually a bias and activation.</dd></div>
+  <div><dt>Parameter</dt><dd>A stored value, such as a weight or bias, that can be adjusted during training.</dd></div>
+  <div><dt>Pointwise / elementwise</dt><dd>Apply the same rule independently to individual entries.</dd></div>
+  <div><dt>Pre-activation</dt><dd>The value z = Wx + b before the activation function.</dd></div>
+  <div><dt>ReLU</dt><dd>max(0, u): keep a positive input, otherwise output zero.</dd></div>
+  <div><dt>Shape</dt><dd>The sizes of an array’s dimensions. For example, (2, 3) means two rows and three columns.</dd></div>
+  <div><dt>Sigmoid</dt><dd>The function eᵘ / (1 + eᵘ), with output strictly between 0 and 1 for finite u.</dd></div>
+  <div><dt>SiLU</dt><dd>u × sigmoid(u), a smooth activation that may produce small negative values.</dd></div>
+  <div><dt>Softplus</dt><dd>ln(1 + eᵘ), a smooth, strictly positive activation.</dd></div>
+  <div><dt>tanh</dt><dd>A smooth activation with finite-input outputs strictly between −1 and 1.</dd></div>
+  <div><dt>Tensor</dt><dd>A numerical array. Vectors and matrices are particular tensor shapes.</dd></div>
+  <div><dt>Threshold</dt><dd>The cutoff θ in ReLU(s − θ). It corresponds to additive bias b = −θ.</dd></div>
+  <div><dt>Transpose</dt><dd>Exchange a matrix’s rows and columns, written Wᵀ. A column vector becomes a row.</dd></div>
+  <div><dt>Vector</dt><dd>An ordered collection of numerical entries.</dd></div>
+  <div><dt>Weight</dt><dd>The multiplier on a connection, controlling one input’s signed contribution.</dd></div>
+  <div><dt>Width / depth</dt><dd>Width counts units in a layer. In the source definition, depth L counts affine layers after the input.</dd></div>
+  </dl>
+  <h3>What was selected</h3>
+  <p>The source is <strong>Language Modeling: A Mathematical Perspective</strong>, attributed to <strong>Vanny Khon</strong> in the lecture. It is a local HTML document, not a paginated PDF. References use its real section titles and IDs; no page numbers have been invented.</p>
+  <div class="table-wrap"><table class="coverage"><thead><tr><th>Actual source location</th><th>Coverage in this guide</th></tr></thead><tbody><tr><td><a href="Ch1-A_Mathematical_Perspective.html#s-2">1. Artificial Neural Network</a><br><code>#s-2</code></td><td>Signal flow; neuron and layer notation; weighted sums and dot products; matrix stacking and dimensions; layer recurrence; collapse of linear maps; threshold and bias; affine maps and spaces of linear maps; pointwise activation; formal composition; architecture; ReLU, SiLU, sigmoid, tanh, and softplus.</td></tr><tr><td><a href="Ch1-A_Mathematical_Perspective.html#s-3">1.1 Coding Neural Networks with PyTorch</a><br><code>#s-3</code></td><td>Imports; tensor creation and arithmetic; linspace and plotting; random tensors and slicing; nn.Linear and bias=False; parameter attributes; row-oriented batches; objects and methods; NeuralNet with 20 hidden units; tanh; reshaping 300 inputs; no_grad; and the untrained network plot.</td></tr></tbody></table></div>
+  <details><summary style="cursor:pointer;font-weight:650;min-height:44px">Excluded source content</summary><p class="small">Section 0 (Preface); 2 (Digression: Metric Spaces); 3 (Universal Approximation Theorems), including 3.1; 4 (Gradient Descent Algorithm), including 4.1 and 4.2; 5 (Recursive Language Models); 6 (Cross-Entropy); 7 (Recurrent Neural Network), including 7.1; 8 (RNN Based Language Model), including 8.1; 9 (Transformer Model), including 9.1–9.4; and 10 (My thought about language model and some open questions), including 10.1–10.3. Brief prerequisite explanations in this guide are labeled separately.</p></details>
+  <h3>Editorial clarifications</h3>
+  <p class="small muted">These notes make source ambiguities explicit. They do not change the selected scope.</p>
+  <div class="source-notes">
+    <details><summary>1. Threshold subtraction and bias addition have opposite signs.</summary><p>Source §1 first writes ReLU(x − b) for a threshold and later ReLU(WX + b) for a bias. Setting b = −θ reconciles the conventions. The worked calculations consistently use additive bias.</p></details>
+    <details><summary>2. One weight-vector index appears to be a typo.</summary><p>In the paragraph after the weighted-vector discussion, the source refers to W<sub>m</sub><sup>i−1</sup> for another receiving neuron in layer i. W<sub>m</sub><sup>i</sup> agrees with the surrounding definitions and matrix rows, and is used here.</p></details>
+    <details><summary>3. The final activation follows the source’s formal definition.</summary><p>The earlier recurrence applies ReLU to each layer. The later formal composition and the PyTorch class end with an affine map. This guide explains the difference and follows the latter convention when assembling the complete networks.</p></details>
+    <details><summary>4. nn.Linear is affine when it includes a bias.</summary><p>The source’s formula Wx + b is correct. Its later description of a general nn.Linear(n, m) as strictly linear needs the qualification b = 0. The bias=False example removes the bias parameter.</p></details>
+    <details><summary>5. Batches are a useful input format, not the only valid format.</summary><p>A single vector with n features also works. In a batch or higher-dimensional input, the last dimension holds the features and is transformed from n to m.</p></details>
+    <details><summary>6. Slices are tensors, and parameters are not Python pairs.</summary><p>Shapes (3,) and (2,) denote one-dimensional tensors. A Parameter stores tensor values and exposes a .grad attribute, normally None before a backward calculation. The source’s “list” and “pair” language is treated as informal explanation.</p></details>
+  </div>
+  <h3>How this edition works</h3>
+  <p class="small">The selected prose, formulas, code, and vector-diagram labels were readable. Source concepts and notation determine the lesson. Numerical examples, analogies, quizzes, shape checks, and browser controls are added learning support. The SVG drawings are simplified explanatory diagrams, rather than pixel-for-pixel copies.</p>
+  <p class="small">The file runs directly in a modern browser with JavaScript and native MathML support. All lessons, calculations, diagrams, and labs are embedded. Keep the original lecture beside this guide so the source links continue to work. Python execution is separate and requires the named packages. Use the Print / PDF button for a paper copy; the interactive controls stay in the HTML edition.</p>
+  <div class="callout"><strong>You are ready to move on when…</strong><p>You can calculate one neuron’s output, check a weight matrix’s shape, explain why a hidden activation is needed, and trace the source’s 1 → 20 → 1 model without guessing. Revisit the relevant lab whenever one of these steps feels uncertain.</p></div>
+  <div class="end-links"><a href="#build">← Build the network</a><a href="#start">Back to the beginning ↑</a></div>
+  </section>
+  <footer class="footer"><span>Chapter 01 · Artificial Neural Network<br>Adapted for personal study. Instructor original retained.</span><a href="#start">Back to top ↑</a></footer>
+  </main>
+</div>
+<script>
+(() => {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const fmt = (value, places = 5) => {
+    if (!Number.isFinite(value)) return 'undefined';
+    const rounded = Number(value.toFixed(places));
+    return Object.is(rounded, -0) ? '0' : String(rounded);
+  };
+  const read = (id) => {
+    const value = Number($(id).value);
+    const output = $(id + '-value');
+    if (output) output.textContent = fmt(value);
+    return value;
+  };
+  const setValues = (values) => Object.entries(values).forEach(([id, value]) => { $(id).value = value; });
+  const listen = (ids, callback) => ids.forEach((id) => $(id).addEventListener('input', callback));
+  const sigmoid = (u) => u >= 0 ? 1 / (1 + Math.exp(-u)) : Math.exp(u) / (1 + Math.exp(u));
+  const activations = {
+    relu: {name: 'ReLU', fn: (u) => Math.max(0, u)},
+    silu: {name: 'SiLU', fn: (u) => u * sigmoid(u)},
+    sigmoid: {name: 'sigmoid', fn: sigmoid},
+    tanh: {name: 'tanh', fn: (u) => Math.tanh(u)},
+    softplus: {name: 'softplus', fn: (u) => Math.max(u, 0) + Math.log1p(Math.exp(-Math.abs(u)))},
+  };
+
+  // Every chart is a responsive, labelled SVG; no external plotting library.
+  const NS = 'http://www.w3.org/2000/svg';
+  function svgNode(tag, attributes = {}, content) {
+    const node = document.createElementNS(NS, tag);
+    Object.entries(attributes).forEach(([key, value]) => node.setAttribute(key, String(value)));
+    if (content !== undefined) node.textContent = content;
+    return node;
+  }
+  function plot(svg, config) {
+    const width = Math.max(250, Math.round(svg.getBoundingClientRect().width || 720));
+    const height = width < 450 ? 275 : 330;
+    svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    svg.replaceChildren();
+    const titleId = svg.id + '-title';
+    svg.append(svgNode('title', {id: titleId}, config.title));
+    svg.setAttribute('aria-labelledby', titleId);
+    svg.append(svgNode('desc', {}, `Horizontal axis: ${config.xLabel}, from ${fmt(config.xMin)} to ${fmt(config.xMax)}. Vertical axis: ${config.yLabel}, from ${fmt(config.yMin)} to ${fmt(config.yMax)}. Current numerical values are provided below the chart.`));
+    const left = 47, right = 16, top = 29, bottom = 43;
+    const innerW = width - left - right, innerH = height - top - bottom;
+    const px = (x) => left + ((x - config.xMin) / (config.xMax - config.xMin)) * innerW;
+    const py = (y) => top + ((config.yMax - y) / (config.yMax - config.yMin)) * innerH;
+    const grid = svgNode('g', {stroke: '#e5ece2', 'stroke-width': 1});
+    const textStyle = {'font-size': 11, fill: '#61756a'};
+    for (let i = 0; i <= 4; i++) {
+      const x = config.xMin + (config.xMax - config.xMin) * i / 4;
+      const y = config.yMin + (config.yMax - config.yMin) * i / 4;
+      grid.append(svgNode('line', {x1: px(x), x2: px(x), y1: top, y2: height - bottom}));
+      grid.append(svgNode('line', {x1: left, x2: width - right, y1: py(y), y2: py(y)}));
+      svg.append(svgNode('text', {...textStyle, x: px(x), y: height - bottom + 20, 'text-anchor': 'middle'}, fmt(x, 2)));
+      svg.append(svgNode('text', {...textStyle, x: left - 8, y: py(y) + 4, 'text-anchor': 'end'}, fmt(y, 2)));
+    }
+    svg.prepend(grid);
+    svg.append(svgNode('text', {...textStyle, x: width - right, y: height - 5, 'text-anchor': 'end'}, config.xLabel));
+    svg.append(svgNode('text', {...textStyle, x: left, y: 15}, config.yLabel));
+    if (config.yMin <= 0 && config.yMax >= 0) svg.append(svgNode('line', {x1: left, x2: width - right, y1: py(0), y2: py(0), stroke: '#a1b8a5', 'stroke-width': 1.2}));
+    if (config.xMin <= 0 && config.xMax >= 0) svg.append(svgNode('line', {x1: px(0), x2: px(0), y1: top, y2: height - bottom, stroke: '#a1b8a5', 'stroke-width': 1.2}));
+    const clipId = svg.id + '-clip';
+    const defs = svgNode('defs');
+    const clip = svgNode('clipPath', {id: clipId});
+    clip.append(svgNode('rect', {x: left - 1, y: top - 1, width: innerW + 2, height: innerH + 2}));
+    defs.append(clip); svg.append(defs);
+    const dataGroup = svgNode('g', {'clip-path': `url(#${clipId})`});
+    config.series.forEach((series) => {
+      const pathData = series.points.map(([x, y], i) => `${i ? 'L' : 'M'}${px(x).toFixed(3)},${py(y).toFixed(3)}`).join(' ');
+      const attrs = {d: pathData, fill: 'none', stroke: series.color || '#176b5b', 'stroke-width': series.dashed ? 1.8 : 2.5, 'stroke-linejoin': 'round'};
+      if (series.dashed) attrs['stroke-dasharray'] = '6 5';
+      dataGroup.append(svgNode('path', attrs));
+      if (series.markers) series.points.forEach(([x, y]) => dataGroup.append(svgNode('circle', {cx: px(x), cy: py(y), r: 2.3, fill: series.color || '#176b5b'})));
+    });
+    if (config.point) {
+      const [x, y] = config.point;
+      dataGroup.append(svgNode('line', {x1: px(x), x2: px(x), y1: top, y2: height - bottom, stroke: '#b48250', 'stroke-dasharray': '3 5', 'stroke-width': 1}));
+      dataGroup.append(svgNode('circle', {cx: px(x), cy: py(y), r: 5.2, fill: '#a56835', stroke: 'white', 'stroke-width': 2}));
+    }
+    svg.append(dataGroup);
+  }
+  function sample(fn, start, end, count) {
+    return Array.from({length: count}, (_, i) => {
+      const x = start + (end - start) * i / (count - 1);
+      return [x, fn(x)];
+    });
+  }
+
+  function renderNeuron() {
+    const x1 = read('neuron-x1'), x2 = read('neuron-x2');
+    const w1 = read('neuron-w1'), w2 = read('neuron-w2'), b = read('neuron-bias');
+    const c1 = w1 * x1, c2 = w2 * x2, sum = c1 + c2, z = sum + b, y = Math.max(0, z);
+    $('neuron-node1').textContent = fmt(x1); $('neuron-node2').textContent = fmt(x2);
+    $('neuron-contribution1').textContent = `${fmt(w1)} × ${fmt(x1)} = ${fmt(c1)}`;
+    $('neuron-contribution2').textContent = `${fmt(w2)} × ${fmt(x2)} = ${fmt(c2)}`;
+    $('neuron-diagram-output').textContent = fmt(y);
+    [w1, w2].forEach((w, i) => {
+      const edge = $('neuron-edge' + (i + 1));
+      edge.setAttribute('stroke', w < 0 ? '#b37a59' : '#598870');
+      edge.setAttribute('stroke-width', String(1 + Math.abs(w) * 1.5));
+    });
+    $('neuron-readout').innerHTML = `s = (${fmt(w1)} × ${fmt(x1)}) + (${fmt(w2)} × ${fmt(x2)}) = ${fmt(c1)} + (${fmt(c2)}) = ${fmt(sum)}<br>z = s + b = ${fmt(sum)} + (${fmt(b)}) = ${fmt(z)}<br>ReLU(z) = max(0, ${fmt(z)})<strong class="big-answer" id="neuron-answer">${fmt(y)}</strong>`;
+    Object.assign($('neuron-readout').dataset, {sum, z, output: y});
+  }
+  listen(['neuron-x1', 'neuron-x2', 'neuron-w1', 'neuron-w2', 'neuron-bias'], renderNeuron);
+  $('neuron-reset').addEventListener('click', () => {
+    setValues({'neuron-x1': 2, 'neuron-x2': 3, 'neuron-w1': 0.5, 'neuron-w2': 2, 'neuron-bias': 1}); renderNeuron();
+  });
+  $('neuron-blocked').addEventListener('click', () => {
+    setValues({'neuron-x1': -2, 'neuron-x2': 1, 'neuron-w1': 0.5, 'neuron-w2': -2, 'neuron-bias': -0.5}); renderNeuron();
+  });
+
+  function renderActivation() {
+    const kind = $('activation-kind').value, rule = activations[kind];
+    const signal = read('activation-signal'), threshold = read('activation-threshold');
+    const u = signal - threshold, value = rule.fn(u);
+    const limits = kind === 'sigmoid' ? [-0.1, 1.1] : kind === 'tanh' ? [-1.2, 1.2] : [-1, 9.6];
+    const series = [{points: sample((s) => rule.fn(s - threshold), -6, 6, 401)}];
+    if (kind === 'silu') series.unshift({points: sample((s) => Math.max(0, s - threshold), -6, 6, 401), color: '#b27847', dashed: true});
+    plot($('activation-chart'), {title: `${rule.name}(s − θ), with θ = ${fmt(threshold)}. At s = ${fmt(signal)}, output = ${fmt(value)}.`, xMin: -6, xMax: 6, yMin: limits[0], yMax: limits[1], xLabel: 'incoming signal s', yLabel: 'activation output', series, point: [signal, value]});
+    $('activation-legend').textContent = `${rule.name}(s − θ)`;
+    $('activation-comparison').hidden = kind !== 'silu';
+    let calculation;
+    if (kind === 'relu') calculation = `ReLU(${fmt(u)}) = max(0, ${fmt(u)})`;
+    if (kind === 'silu') calculation = `sigmoid(${fmt(u)}) ≈ ${fmt(sigmoid(u))}<br>SiLU(${fmt(u)}) = ${fmt(u)} × ${fmt(sigmoid(u))}`;
+    if (kind === 'sigmoid') calculation = `sigmoid(${fmt(u)}) = 1 / (1 + e<sup>−(${fmt(u)})</sup>)`;
+    if (kind === 'tanh') calculation = `tanh(${fmt(u)}) = (e<sup>${fmt(u)}</sup> − e<sup>−(${fmt(u)})</sup>) / (e<sup>${fmt(u)}</sup> + e<sup>−(${fmt(u)})</sup>)`;
+    if (kind === 'softplus') calculation = `softplus(${fmt(u)}) = ln(1 + e<sup>${fmt(u)}</sup>)`;
+    $('activation-readout').innerHTML = `u = s − θ = ${fmt(signal)} − (${fmt(threshold)}) = ${fmt(u)}<br>${calculation}<strong class="big-answer">${fmt(value)}</strong>`;
+    Object.assign($('activation-readout').dataset, {argument: u, output: value});
+  }
+  listen(['activation-kind', 'activation-signal', 'activation-threshold'], renderActivation);
+  $('activation-negative').addEventListener('click', () => { setValues({'activation-signal': -1, 'activation-threshold': 0}); renderActivation(); });
+  $('activation-reset').addEventListener('click', () => { setValues({'activation-kind': 'silu', 'activation-signal': 1, 'activation-threshold': 0}); renderActivation(); });
+
+  function renderTensors() {
+    const a = [read('tensor-a1'), read('tensor-a2')], b = [read('tensor-b1'), read('tensor-b2')];
+    const operation = $('tensor-operation').value;
+    const result = operation === 'add' ? a.map((x, i) => x + b[i]) : operation === 'scale' ? a.map((x) => 3 * x) : b.map((x) => x * x);
+    const lines = result.map((y, i) => `Position ${i}: ` + (operation === 'add' ? `${fmt(a[i])} + (${fmt(b[i])})` : operation === 'scale' ? `3 × (${fmt(a[i])})` : `(${fmt(b[i])})²`) + ` = ${fmt(y)}`);
+    $('tensor-readout').innerHTML = `${lines.join('<br>')}<strong class="big-answer">[${result.map((x) => fmt(x)).join(', ')}]</strong><span class="small">Output shape: (2,)</span>`;
+    $('tensor-readout').dataset.values = JSON.stringify(result);
+  }
+  listen(['tensor-operation', 'tensor-a1', 'tensor-a2', 'tensor-b1', 'tensor-b2'], renderTensors);
+  $('tensor-reset').addEventListener('click', () => { setValues({'tensor-operation': 'add', 'tensor-a1': -1, 'tensor-a2': 2, 'tensor-b1': 2, 'tensor-b2': -7}); renderTensors(); });
+
+  function renderPolynomial() {
+    const count = read('poly-count'), a = read('poly-input');
+    const points = sample((x) => x * x - 3 * x, -4, 4, count), result = a * a - 3 * a;
+    plot($('polynomial-chart'), {title: `The polynomial a² − 3a sampled at ${count} points. At a = ${fmt(a)}, the value is ${fmt(result)}.`, xMin: -4, xMax: 4, yMin: -4, yMax: 30, xLabel: 'input a', yLabel: 'a² − 3a', series: [{points, markers: true}], point: [a, result]});
+    $('polynomial-readout').innerHTML = `<strong>torch.linspace(−4, 4, ${count})</strong> → shape (${count},)<br>Equal gap = 8 / ${count - 1} ≈ ${fmt(8 / (count - 1))}<br>At a = ${fmt(a)}: (${fmt(a)})² − 3×(${fmt(a)}) = ${fmt(a * a)} − (${fmt(3 * a)}) = <strong>${fmt(result)}</strong>`;
+    Object.assign($('polynomial-readout').dataset, {count, output: result});
+  }
+  listen(['poly-count', 'poly-input'], renderPolynomial);
+  $('poly-reset').addEventListener('click', () => { setValues({'poly-count': 30, 'poly-input': 2}); renderPolynomial(); });
+
+  const sourceSample = [[0.9607, 0.1908, 0.6339], [0.9940, 0.0890, 0.3960]];
+  let sliceValues = sourceSample.map((r) => [...r]);
+  function renderSlices() {
+    const rowIndex = read('slice-row'), columnIndex = read('slice-col');
+    const grid = $('slice-grid'); grid.replaceChildren();
+    const head = document.createElement('thead'), headerRow = document.createElement('tr');
+    ['', 'column 0', 'column 1', 'column 2'].forEach((text) => { const cell = document.createElement('th'); cell.textContent = text; cell.scope = 'col'; headerRow.append(cell); });
+    head.append(headerRow); grid.append(head);
+    const body = document.createElement('tbody');
+    sliceValues.forEach((r, i) => {
+      const tr = document.createElement('tr'), heading = document.createElement('th'); heading.textContent = `row ${i}`; heading.scope = 'row'; tr.append(heading);
+      r.forEach((v, j) => {
+        const td = document.createElement('td'); td.textContent = v.toFixed(4);
+        if (i === rowIndex) td.classList.add('chosen-row');
+        if (j === columnIndex) td.classList.add('chosen-col');
+        if (i === rowIndex && j === columnIndex) td.classList.add('intersection');
+        td.setAttribute('aria-label', `Row ${i}, column ${j}: ${v.toFixed(4)}${i === rowIndex ? ', selected row' : ''}${j === columnIndex ? ', selected column' : ''}`);
+        tr.append(td);
+      }); body.append(tr);
+    }); grid.append(body);
+    const selectedRow = sliceValues[rowIndex], selectedCol = sliceValues.map((r) => r[columnIndex]);
+    $('slice-readout').innerHTML = `x[${rowIndex}, :] → [${selectedRow.map((v) => v.toFixed(4)).join(', ')}], shape (3,)<br>x[:, ${columnIndex}] → [${selectedCol.map((v) => v.toFixed(4)).join(', ')}], shape (2,)<br>Shared entry x[${rowIndex}, ${columnIndex}] = <strong>${sliceValues[rowIndex][columnIndex].toFixed(4)}</strong>`;
+    Object.assign($('slice-readout').dataset, {row: JSON.stringify(selectedRow), column: JSON.stringify(selectedCol)});
+  }
+  listen(['slice-row', 'slice-col'], renderSlices);
+  $('slice-new').addEventListener('click', () => { sliceValues = Array.from({length: 2}, () => Array.from({length: 3}, () => Math.floor(Math.random() * 10000) / 10000)); renderSlices(); });
+  $('slice-reset').addEventListener('click', () => { sliceValues = sourceSample.map((r) => [...r]); setValues({'slice-row': 1, 'slice-col': 2}); renderSlices(); });
+
+  const weightPool = [[0.5, 2, -0.5, 1], [1, -1, 1.5, 0], [-1, 0.5, 1, -0.5], [0.5, 1, -1, 2]];
+  const inputPool = [[2, 3, 1, -1], [0, 1, 2, 0.5], [-1, 2, 0, 1], [1, -1, 0.5, 2]];
+  const biasPool = [1, 0.5, 0, -1];
+  function tableValues(id, values, rowName, colName) {
+    const table = $(id); table.replaceChildren();
+    const head = document.createElement('thead'), tr = document.createElement('tr');
+    const empty = document.createElement('th'); empty.scope = 'col'; empty.textContent = rowName; tr.append(empty);
+    values[0].forEach((_, j) => { const th = document.createElement('th'); th.textContent = `${colName} ${j}`; th.scope = 'col'; tr.append(th); });
+    head.append(tr); table.append(head);
+    const body = document.createElement('tbody');
+    values.forEach((valuesRow, i) => {
+      const r = document.createElement('tr'), th = document.createElement('th'); th.textContent = String(i); th.scope = 'row'; r.append(th);
+      valuesRow.forEach((v) => { const td = document.createElement('td'); td.textContent = fmt(v); td.dataset.value = String(v); r.append(td); }); body.append(r);
+    }); table.append(body);
+  }
+  function renderBatch() {
+    const n = read('batch-inputs'), m = read('batch-outputs'), k = read('batch-size');
+    const W = weightPool.slice(0, m).map((r) => r.slice(0, n));
+    const B = inputPool.slice(0, k).map((r) => r.slice(0, n));
+    const b = biasPool.slice(0, m);
+    const Y = B.map((r) => W.map((weights, j) => weights.reduce((sum, w, i) => sum + w * r[i], b[j])));
+    tableValues('batch-b-table', B, 'example', 'input');
+    tableValues('batch-w-table', W, 'output', 'input');
+    tableValues('batch-y-table', Y, 'example', 'output');
+    $('batch-bias').textContent = `b = [${b.map((v) => fmt(v)).join(', ')}]`;
+    $('batch-shape-flow').innerHTML = `<div class="node">B: (${k}, ${n})<small>${k} example${k === 1 ? '' : 's'}</small></div><span class="arrow" aria-hidden="true">→</span><div class="node">Linear(${n}, ${m})<small>W: (${m}, ${n}), b: (${m},)</small></div><span class="arrow" aria-hidden="true">→</span><div class="node">Y: (${k}, ${m})<small>one row per example</small></div>`;
+    const terms = W[0].map((w, i) => `(${fmt(B[0][i])} × ${fmt(w)})`);
+    $('batch-readout').innerHTML = `First output of first example:<br>${terms.join(' + ')} + (${fmt(b[0])}) = <strong>${fmt(Y[0][0])}</strong><br>Each of the ${k} example${k === 1 ? '' : 's'} uses the same ${m * n} weights and ${m} biases.`;
+    Object.assign($('batch-readout').dataset, {inputs: n, outputs: m, batch: k, values: JSON.stringify(Y)});
+  }
+  listen(['batch-inputs', 'batch-outputs', 'batch-size'], renderBatch);
+  $('batch-reset').addEventListener('click', () => { setValues({'batch-inputs': 2, 'batch-outputs': 3, 'batch-size': 2}); renderBatch(); });
+
+  function randomStream(seed) {
+    let state = seed >>> 0;
+    return () => {
+      state += 0x6D2B79F5;
+      let t = state;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  let netSeed = 7;
+  function makeParameters(seed) {
+    const random = randomStream(seed);
+    return {
+      w1: Array.from({length: 20}, () => 2 * random() - 1),
+      b1: Array.from({length: 20}, () => 2 * random() - 1),
+      w2: Array.from({length: 20}, () => (2 * random() - 1) / Math.sqrt(20)),
+    };
+  }
+  let params = makeParameters(netSeed);
+  function evaluateNetwork(x, bias) {
+    const z = params.w1.map((w, i) => w * x + params.b1[i]);
+    const h = z.map((value) => Math.tanh(value));
+    const terms = h.map((value, i) => value * params.w2[i]);
+    return {z, h, terms, output: terms.reduce((sum, value) => sum + value, bias)};
+  }
+  function renderNetwork() {
+    const x = read('net-input'), bias = read('net-bias'), unit = read('net-unit') - 1;
+    const result = evaluateNetwork(x, bias);
+    const basePoints = sample((v) => evaluateNetwork(v, 0).output, -20, 20, 300);
+    const points = basePoints.map(([v, y]) => [v, y + bias]);
+    const ys = basePoints.map((p) => p[1]).concat([result.output - bias]);
+    const minimum = Math.min(...ys), maximum = Math.max(...ys);
+    const pad = Math.max(0.15, (maximum - minimum) * 0.13);
+    plot($('network-chart'), {title: `An illustrative untrained 1 to 20 to 1 tanh network. At x = ${fmt(x)}, output = ${fmt(result.output)}.`, xMin: -20, xMax: 20, yMin: minimum - 1 - pad, yMax: maximum + 1 + pad, xLabel: 'input x', yLabel: 'network output N(x)', series: [{points}], point: [x, result.output]});
+    [['net-w1', params.w1[unit]], ['net-b1', params.b1[unit]], ['net-w2', params.w2[unit]]].forEach(([id, value]) => { $(id).textContent = fmt(value); $(id).dataset.value = value; });
+    const bars = $('hidden-bars'); bars.replaceChildren();
+    result.h.forEach((h, i) => {
+      const track = document.createElement('div'); track.className = 'bar-track' + (unit === i ? ' selected' : '');
+      track.title = `Hidden neuron ${i + 1}: ${fmt(h)}`;
+      const bar = document.createElement('div'); bar.className = 'hidden-bar' + (h < 0 ? ' negative' : '');
+      bar.style.height = `${Math.abs(h) * 47}%`; track.append(bar); bars.append(track);
+    });
+    bars.setAttribute('aria-label', `Twenty hidden tanh outputs. Selected neuron ${unit + 1} has output ${fmt(result.h[unit])}. The calculation is given below.`);
+    $('network-readout').innerHTML = `<strong>Hidden neuron ${unit + 1}</strong><br>z = (${fmt(params.w1[unit])} × ${fmt(x)}) + (${fmt(params.b1[unit])}) ≈ ${fmt(result.z[unit])}<br>h = tanh(z) ≈ ${fmt(result.h[unit])}<br>Contribution to the output: ${fmt(params.w2[unit])} × ${fmt(result.h[unit])} ≈ ${fmt(result.terms[unit])}<br><br>Sum of all 20 contributions ≈ ${fmt(result.output - bias)}<br>Final output = sum + b² = ${fmt(result.output - bias)} + (${fmt(bias)})<strong class="big-answer">${fmt(result.output)}</strong><span class="small">Displayed values are rounded; the calculation uses full precision.</span>`;
+    Object.assign($('network-readout').dataset, {output: result.output, input: x, bias, z: result.z[unit], activation: result.h[unit], contribution: result.terms[unit]});
+  }
+  listen(['net-input', 'net-bias', 'net-unit'], renderNetwork);
+  $('net-new').addEventListener('click', () => { netSeed += 1; params = makeParameters(netSeed); renderNetwork(); });
+  $('net-reset').addEventListener('click', () => { netSeed = 7; params = makeParameters(netSeed); setValues({'net-input': 2, 'net-bias': 0, 'net-unit': 1}); renderNetwork(); });
+
+  document.querySelectorAll('.quiz').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const feedback = form.querySelector('.quiz-feedback');
+      let correct;
+      if (form.dataset.kind === 'choice') {
+        const chosen = form.querySelector('input[type=radio]:checked');
+        if (!chosen) { feedback.textContent = 'Choose an option first, then check your answer.'; feedback.dataset.correct = 'false'; return; }
+        correct = chosen.value === form.dataset.answer;
+      } else {
+        const field = form.querySelector('input[type=number]');
+        const number = Number(field.value);
+        if (!field.value.trim() || !Number.isFinite(number)) { feedback.textContent = 'Enter a numerical answer first.'; feedback.dataset.correct = 'false'; return; }
+        correct = Math.abs(number - Number(form.dataset.answer)) <= Number(form.dataset.tolerance || 0);
+      }
+      feedback.dataset.correct = String(correct);
+      feedback.textContent = (correct ? 'Correct. ' : 'Try again. ') + form.dataset.explanation;
+    });
+    form.addEventListener('input', () => { const feedback = form.querySelector('.quiz-feedback'); feedback.textContent = ''; delete feedback.dataset.correct; });
+  });
+
+  // A small mobile drawer, with keyboard dismissal and a contained focus order.
+  const sidebar = $('study-nav'), menu = $('menu-toggle'), shade = $('menu-shade');
+  const mobile = window.matchMedia('(max-width: 800px)');
+  let menuOpen = false;
+  function setMenu(open, restoreFocus = true) {
+    menuOpen = mobile.matches && open;
+    sidebar.classList.toggle('open', menuOpen);
+    menu.setAttribute('aria-expanded', String(menuOpen));
+    sidebar.inert = mobile.matches && !menuOpen;
+    shade.hidden = !menuOpen; shade.classList.toggle('visible', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    if (menuOpen) (sidebar.querySelector('a.active') || sidebar.querySelector('a')).focus();
+    else if (restoreFocus && mobile.matches) menu.focus();
+  }
+  menu.addEventListener('click', () => setMenu(!menuOpen));
+  shade.addEventListener('click', () => setMenu(false));
+  sidebar.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => { if (menuOpen) setMenu(false, false); }));
+  mobile.addEventListener('change', () => setMenu(false, false));
+  document.addEventListener('keydown', (event) => {
+    if (!menuOpen) return;
+    if (event.key === 'Escape') { event.preventDefault(); setMenu(false); }
+    if (event.key === 'Tab') {
+      const order = [menu, ...sidebar.querySelectorAll('a')];
+      const index = order.indexOf(document.activeElement);
+      if (event.shiftKey && index === 0) { event.preventDefault(); order[order.length - 1].focus(); }
+      else if (!event.shiftKey && index === order.length - 1) { event.preventDefault(); menu.focus(); }
+    }
+  });
+  setMenu(false, false);
+
+  const navLinks = [...document.querySelectorAll('.toc a')];
+  const chapters = navLinks.map((link) => $(link.hash.slice(1)));
+  let scrollFrame = false;
+  function updateReading() {
+    const height = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = height > 0 ? Math.min(100, Math.max(0, window.scrollY / height * 100)) : 100;
+    $('reading-progress').style.width = `${progress}%`;
+    $('reading-progress').parentElement.setAttribute('aria-valuenow', String(Math.round(progress)));
+    $('progress-caption').textContent = progress < 1 ? 'At the beginning' : progress > 99 ? 'End of the guide' : `${Math.round(progress)}% through the guide`;
+    let current = 0;
+    chapters.forEach((chapter, index) => { if (chapter.getBoundingClientRect().top <= 150) current = index; });
+    navLinks.forEach((link, index) => {
+      link.classList.toggle('active', index === current);
+      if (index === current) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current');
+    });
+    scrollFrame = false;
+  }
+  window.addEventListener('scroll', () => { if (!scrollFrame) { scrollFrame = true; requestAnimationFrame(updateReading); } }, {passive: true});
+  let resizeFrame = false;
+  window.addEventListener('resize', () => {
+    if (resizeFrame) return; resizeFrame = true;
+    requestAnimationFrame(() => { renderActivation(); renderPolynomial(); renderNetwork(); updateReading(); resizeFrame = false; });
+  });
+
+  let printStates = [];
+  window.addEventListener('beforeprint', () => {
+    printStates = [...document.querySelectorAll('details')].map((detail) => [detail, detail.open]);
+    printStates.forEach(([detail]) => { detail.open = true; });
+  });
+  window.addEventListener('afterprint', () => { printStates.forEach(([detail, wasOpen]) => { detail.open = wasOpen; }); printStates = []; });
+  $('print-guide').addEventListener('click', () => window.print());
+
+  renderNeuron(); renderActivation(); renderTensors(); renderPolynomial(); renderSlices(); renderBatch(); renderNetwork(); updateReading();
+  document.documentElement.dataset.guideReady = 'true';
+})();
+</script>
+</body>
+</html>
