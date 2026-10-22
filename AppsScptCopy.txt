@@ -1,0 +1,93 @@
+HOW TO COPY A GOOGLE APPS SCRIPT LECTURE PAGE TO AN OFFLINE HTML FILE
+=====================================================================
+
+Works for pages whose link looks like:
+  https://script.google.com/macros/s/.../exec
+
+Tested on: "Language Modeling: A Mathematical Perspective" (Vanny Khon)
+Result:    Course/Ch1-A_Mathematical_Perspective.html (all sections, math,
+           diagrams and navigation working)
+
+
+WHY "VIEW PAGE SOURCE" OR CTRL+S DOESN'T WORK
+---------------------------------------------
+An Apps Script page is several frames nested inside each other:
+
+  script.google.com/.../exec          <- outer page (Google's banner)
+   +- sandbox frame (googleusercontent) <- Google wrapper, nearly empty
+       +- userHtmlFrame                 <- the real lecture lives here
+
+Saving the page or viewing its source only gives you the empty wrapper.
+You have to copy the live content of "userHtmlFrame".
+
+
+BEFORE YOU START
+----------------
+- Use Chrome on a computer.
+- Be signed in to the Google account that can open the lecture.
+- Open the lecture link and wait until the content is fully shown
+  (formulas drawn, sidebar visible).
+
+
+STEPS
+-----
+1. Press F12 to open DevTools, then click the "Console" tab.
+
+2. Find the dropdown at the top-left of the Console that says "top".
+   Click it and choose "userHtmlFrame".
+   (It is usually nested under a "...googleusercontent.com" entry.)
+   >>> This is the step people miss. If you skip it, the copy is empty. <<<
+
+3. If Chrome warns you about pasting code, type:
+       allow pasting
+   and press Enter. (Only needed once.)
+
+4. Choose ONE of these:
+
+   A) Copy to clipboard
+      Paste this and press Enter:
+
+          copy(document.documentElement.outerHTML)
+
+      It prints "undefined", which is normal. Then open a plain text
+      editor (Text Editor / gedit), press Ctrl+V and save it as
+      something.html
+
+   B) Download as a file
+      Paste this and press Enter:
+
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(new Blob([document.documentElement.outerHTML], {type: 'text/html'}));
+          a.download = 'source.html';
+          a.click();
+
+      Then move the downloaded file from Downloads into the Course folder.
+      (If nothing downloads, Google's sandbox blocked it, so use A.)
+
+5. Save or move the file into:
+       /media/super/DualSuper/Class/NLP/Course/
+   Give it a clear name, e.g. Ch2-<title>.html
+
+
+CHECK THAT IT WORKED
+--------------------
+- The file should be large (the first lecture was about 3 MB).
+- Open it in your browser by double-clicking it. You should see the
+  title, the sidebar and the text.
+- Click a few sections in the sidebar. If every section shows its
+  content, you have the whole lecture.
+- If only the section you were viewing has content, the page loads
+  sections on demand. In that case the trick needs an extra step
+  (a script that clicks through every section first). Ask for help.
+
+
+GOOD TO KNOW
+------------
+- Formulas are copied already drawn, so they display without loading
+  anything.
+- Fonts come from Google Fonts. Without internet, a fallback font is used,
+  but the page is still readable.
+- Links to papers and Google Drive still go online. Drive links need you
+  to be signed in.
+- Keep these copies for your own studying. They're your teacher's
+  material, so don't post them publicly.
